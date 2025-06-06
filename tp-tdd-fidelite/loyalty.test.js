@@ -19,4 +19,15 @@ describe('calculateLoyaltyPoints', () => {
         ];
         expect(calculateLoyaltyPoints(cart)).toBe(14);
     });
+
+    test('should add 10 bonus points for cart total over 200€', () => {
+        const cart = [
+            { type: 'standard', price: 150 },
+            { type: 'premium', price: 100 }
+        ];
+        // Standard: 15 points (150/10)
+        // Premium: 20 points (100/10 * 2)
+        // Total: 35 + 10 bonus = 45 points
+        expect(calculateLoyaltyPoints(cart)).toBe(45);
+    });
 });
