@@ -6,8 +6,11 @@ function calculateLoyaltyPoints(cart) {
     let totalPoints = 0;
 
     for (const item of cart) {
+        const basePoints = Math.floor(item.price / 10);
         if (item.type === 'standard') {
-            totalPoints += Math.floor(item.price / 10);
+            totalPoints += basePoints;
+        } else if (item.type === 'premium') {
+            totalPoints += basePoints * 2;
         }
     }
 

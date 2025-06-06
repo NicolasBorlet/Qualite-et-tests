@@ -12,4 +12,11 @@ describe('calculateLoyaltyPoints', () => {
         ];
         expect(calculateLoyaltyPoints(cart)).toBe(3);
     });
+
+    test('should return 14 points for a premium product of 70€', () => {
+        const cart = [
+            { type: 'premium', price: 70 }
+        ];
+        expect(calculateLoyaltyPoints(cart)).toBe(14);
+    });
 });
