@@ -12,6 +12,16 @@ describe('sum', () => {
   test('additionne deux nombres négatifs', () => {
     expect(sum(-2, -3)).toBe(-5);
   });
+
+  test('gère les arguments non numériques', () => {
+    expect(() => sum('a', 2)).toThrow('Les arguments doivent être des nombres');
+    expect(() => sum(2, 'b')).toThrow('Les arguments doivent être des nombres');
+    expect(() => sum('a', 'b')).toThrow('Les arguments doivent être des nombres');
+    expect(() => sum([1, 2], 3)).toThrow('Les arguments doivent être des nombres');
+    expect(() => sum({}, 3)).toThrow('Les arguments doivent être des nombres');
+    expect(() => sum(null, 3)).toThrow('Les arguments doivent être des nombres');
+    expect(() => sum(undefined, 3)).toThrow('Les arguments doivent être des nombres');
+  });
 });
 
 describe('isPalindrome', () => {
@@ -34,6 +44,12 @@ describe('isPalindrome', () => {
   test('gère une chaîne vide', () => {
     expect(isPalindrome('')).toBe(true);
   });
+
+  test('gère les arguments non-chaînes', () => {
+    expect(isPalindrome(123)).toBe(false);
+    expect(isPalindrome(null)).toBe(false);
+    expect(isPalindrome(undefined)).toBe(false);
+  });
 });
 
 describe('getMax', () => {
@@ -51,6 +67,13 @@ describe('getMax', () => {
 
   test('retourne null pour un argument non-tableau', () => {
     expect(getMax('not an array')).toBe(null);
+  });
+
+  test('gère les arguments non-tableau', () => {
+    expect(getMax('not an array')).toBe(null);
+    expect(getMax(123)).toBe(null);
+    expect(getMax(null)).toBe(null);
+    expect(getMax(undefined)).toBe(null);
   });
 });
 
@@ -71,6 +94,12 @@ describe('capitalize', () => {
     expect(capitalize(null)).toBe('');
     expect(capitalize(undefined)).toBe('');
   });
+
+  test('gère les arguments non-chaînes', () => {
+    expect(capitalize(123)).toBe('');
+    expect(capitalize(null)).toBe('');
+    expect(capitalize(undefined)).toBe('');
+  });
 });
 
 describe('divide', () => {
@@ -82,8 +111,18 @@ describe('divide', () => {
     expect(divide(10, -2)).toBe(-5);
   });
 
+  test('divise un nombre négatif par un nombre négatif', () => {
+    expect(divide(-10, -2)).toBe(5);
+  });
+
   test('gère la division par zéro', () => {
     expect(() => divide(4, 0)).toThrow("Division by zero");
+  });
+
+  test('gère les arguments non-numériques', () => {
+    expect(() => divide('a', 2)).toThrow('Les arguments doivent être des nombres');
+    expect(() => divide(2, 'b')).toThrow('Les arguments doivent être des nombres');
+    expect(() => divide('a', 'b')).toThrow('Les arguments doivent être des nombres');
   });
 });
 
