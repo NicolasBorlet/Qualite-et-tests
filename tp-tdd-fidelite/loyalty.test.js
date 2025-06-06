@@ -30,4 +30,25 @@ describe('calculateLoyaltyPoints', () => {
         // Total: 35 + 10 bonus = 45 points
         expect(calculateLoyaltyPoints(cart)).toBe(45);
     });
+
+    test('should return 0 points for negative price', () => {
+        const cart = [
+            { type: 'standard', price: -50 }
+        ];
+        expect(calculateLoyaltyPoints(cart)).toBe(0);
+    });
+
+    test('should return 0 points for missing price', () => {
+        const cart = [
+            { type: 'standard' }
+        ];
+        expect(calculateLoyaltyPoints(cart)).toBe(0);
+    });
+
+    test('should return 0 points for missing type', () => {
+        const cart = [
+            { price: 50 }
+        ];
+        expect(calculateLoyaltyPoints(cart)).toBe(0);
+    });
 });
