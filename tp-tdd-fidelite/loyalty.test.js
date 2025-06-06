@@ -1,4 +1,4 @@
-const { calculateLoyaltyPoints } = require('./loyalty');
+const { calculateLoyaltyPoints, analyzeLoyaltyPoints } = require('./loyalty');
 
 describe('calculateLoyaltyPoints', () => {
     test('should return 0 points for empty cart', () => {
@@ -57,5 +57,50 @@ describe('calculateLoyaltyPoints', () => {
             { type: 'invalid', price: 50 }
         ];
         expect(calculateLoyaltyPoints(cart)).toBe(0);
+    });
+});
+
+describe('analyzeLoyaltyPoints', () => {
+    test('should return correct analysis for empty cart', () => {
+        const cart = [];
+        expect(analyzeLoyaltyPoints(cart)).toEqual({ totalPoints: 0, bonusApplied: false });
+    });
+
+    test('should return correct analysis for cart under 200€', () => {
+        const cart = [
+            { type: 'standard', price: 150 }
+        ];
+        expect(analyzeLoyaltyPoints(cart)).toEqual({ totalPoints: 15, bonusApplied: false });
+    });
+
+    test('should return correct analysis for cart over 200€', () => {
+        const cart = [
+            { type: 'standard', price: 150 },
+            { type: 'premium', price: 100 }
+        ];
+        expect(analyzeLoyaltyPoints(cart)).toEqual({ totalPoints: 45, bonusApplied: true });
+    });
+});
+
+describe('Performance', () => {
+    test('should handle 1000 products efficiently', () => {
+        const cart = Array(1000).fill().map((_, index) => ({
+            type: index % 2 === 0 ? 'standard' : 'premium',
+            price: 50
+        }));
+
+        const startTime = process.hrtime();
+        const result = analyzeLoyaltyPoints(cart);
+        const [seconds, nanoseconds] = process.hrtime(startTime);
+        const executionTime = seconds * 1000 + nanoseconds / 1000000; // Convert to milliseconds
+
+        // Vérification des points
+        // 500 produits standard à 50€ = 2500 points (50/10 * 500)
+        // 500 produits premium à 50€ = 5000 points (50/10 * 2 * 500)
+        // Total: 7500 points + 10 bonus (car total > 200€)
+        expect(result).toEqual({ totalPoints: 7510, bonusApplied: true });
+
+        // Le test doit s'exécuter en moins de 100ms
+        expect(executionTime).toBeLessThan(100);
     });
 });
