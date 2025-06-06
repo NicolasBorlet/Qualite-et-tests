@@ -1,0 +1,27 @@
+<input id="search" placeholder="Rechercher un livre..." />
+<ul id="book-list">
+    <li data-title="Gatsby" data-author="F. Scott Fitzgerald">Gatsby le magnifique</li>
+    <li data-title="1984" data-author="George Orwell">1984</li>
+    <li data-title="Dune" data-author="Frank Herbert">Dune</li>
+</ul>
+<p id="no-results" style="display: none;">Aucun résultat</p>
+
+<script>
+    const input = document.getElementById('search');
+    const list = document.querySelectorAll('#book-list li');
+    const noResults = document.getElementById('no-results');
+
+    input.addEventListener('input', () => {
+        const query = input.value.toLowerCase();
+        let visibleCount = 0;
+
+        list.forEach(item => {
+            const text = (item.dataset.title + item.dataset.author).toLowerCase();
+            const match = text.includes(query);
+            item.style.display = match ? 'list-item' : 'none';
+            if (match) visibleCount++;
+        });
+
+        noResults.style.display = visibleCount === 0 ? 'block' : 'none';
+    });
+</script>
