@@ -1,8 +1,8 @@
 <form id="contact-form">
-    <input id="firstname" placeholder="Prénom" />
-    <input id="lastname" placeholder="Nom" />
-    <input id="email" type="email" placeholder="Email" />
-    <textarea id="message" placeholder="Votre message"></textarea>
+    <input id="firstname" placeholder="Prénom" required />
+    <input id="lastname" placeholder="Nom" required />
+    <input id="email" type="email" placeholder="Email" required />
+    <textarea id="message" placeholder="Votre message" required></textarea>
     <button type="submit">Envoyer</button>
 </form>
 <p id="confirmation" style="display:none;">Merci pour votre message</p>
@@ -11,6 +11,15 @@
     const form = document.getElementById('contact-form');
     form.addEventListener('submit', (e) => {
         e.preventDefault();
-        document.getElementById('confirmation').style.display = 'block';
+
+        // Vérifier si tous les champs sont remplis
+        const firstname = document.getElementById('firstname').value;
+        const lastname = document.getElementById('lastname').value;
+        const email = document.getElementById('email').value;
+        const message = document.getElementById('message').value;
+
+        if (firstname && lastname && email && message) {
+            document.getElementById('confirmation').style.display = 'block';
+        }
     });
 </script>
