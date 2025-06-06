@@ -1,0 +1,16 @@
+<form id="contact-form">
+    <input id="firstname" placeholder="Prénom" />
+    <input id="lastname" placeholder="Nom" />
+    <input id="email" type="email" placeholder="Email" />
+    <textarea id="message" placeholder="Votre message"></textarea>
+    <button type="submit">Envoyer</button>
+</form>
+<p id="confirmation" style="display:none;">Merci pour votre message</p>
+
+<script>
+    const form = document.getElementById('contact-form');
+    form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        document.getElementById('confirmation').style.display = 'block';
+    });
+</script>
