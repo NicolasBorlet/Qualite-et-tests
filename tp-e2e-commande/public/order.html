@@ -1,0 +1,48 @@
+html
+CopierModifier
+<form id="order-form">
+    <label>Produit :
+        <select id="product">
+            <option value="">-- Choisissez --</option>
+            <option value="T-shirt">T-shirt</option>
+            <option value="Mug">Mug</option>
+        </select>
+    </label>
+    <label>Quantité :
+        <input id="quantity" type="number" min="1" />
+    </label>
+    <label>
+        <input type="radio" name="delivery" value="standard" checked /> Livraison standard
+    </label>
+    <label>
+        <input type="radio" name="delivery" value="express" /> Livraison express
+    </label>
+    <button type="submit">Commander</button>
+</form>
+
+<p id="summary" style="display:none;"></p>
+
+<script>
+    document.getElementById('order-form').addEventListener('submit', e => {
+        e.preventDefault();
+        const product = document.getElementById('product').value;
+        const quantity = parseInt(document.getElementById('quantity').value);
+        const delivery = document.querySelector('input[name="delivery"]:checked').value;
+
+        // Vérification des champs vides
+        if (!product || !quantity) {
+            alert("Veuillez remplir tous les champs correctement.");
+            return;
+        }
+
+        // Vérification de la quantité
+        if (quantity <= 0) {
+            alert("Veuillez remplir tous les champs correctement.");
+            return;
+        }
+
+        const summary = `${quantity} x ${product}, livraison ${delivery}`;
+        document.getElementById('summary').textContent = `Commande confirmée : ${summary}`;
+        document.getElementById('summary').style.display = 'block';
+    });
+</script>
