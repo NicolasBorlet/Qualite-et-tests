@@ -51,4 +51,11 @@ describe('calculateLoyaltyPoints', () => {
         ];
         expect(calculateLoyaltyPoints(cart)).toBe(0);
     });
+
+    test('should ignore items with invalid type', () => {
+        const cart = [
+            { type: 'invalid', price: 50 }
+        ];
+        expect(calculateLoyaltyPoints(cart)).toBe(0);
+    });
 });
