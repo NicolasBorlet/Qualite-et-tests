@@ -1,0 +1,21 @@
+{
+    "name": "tp-bdd-playwright",
+    "version": "1.0.0",
+    "description": "BDD testing with Cucumber and Playwright",
+    "scripts": {
+        "test": "cucumber-js",
+        "test:report": "cucumber-js --format html:cucumber-report.html",
+        "dev": "vite"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "devDependencies": {
+        "@cucumber/cucumber": "^10.3.1",
+        "@playwright/test": "^1.42.1",
+        "cucumber-playwright": "^1.2.1",
+        "ts-node": "^10.9.2",
+        "typescript": "^5.8.3",
+        "vite": "^5.1.4"
+    }
+}
