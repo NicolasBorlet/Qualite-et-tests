@@ -93,7 +93,6 @@ describe('Cart', () => {
     });
   });
 
-  // Bonus: clearCart function
   describe('clearCart', () => {
     test('should clear all items and reset total', () => {
       const item1 = { id: 1, name: 'Product 1', price: 10, quantity: 1 };
