@@ -1,0 +1,22 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm install:*)",
+      "Bash(npx husky init:*)",
+      "Bash(mkdir:*)",
+      "Bash(find:*)",
+      "Bash(npx playwright init:*)",
+      "Bash(npm run lint)",
+      "Bash(npm run test:*)",
+      "Bash(npm run:*)",
+      "Bash(ls:*)",
+      "Bash(./tp6-mock-react/node_modules/.bin/eslint ./tp6-mock-react/src)",
+      "Bash(npm --prefix ./tp6-mock-react run test)",
+      "Bash(npm --prefix tp6-mock-react run lint)",
+      "Bash(npm --prefix tp6-mock-react run test)",
+      "Bash(mv:*)",
+      "Bash(npx playwright test:*)"
+    ],
+    "deny": []
+  }
+}
