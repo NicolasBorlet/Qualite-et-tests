@@ -1,5 +1,9 @@
 # TP6 - Mock React Application
 
+[![CI](https://github.com/NicolasBorlet/Qualite-et-tests/actions/workflows/ci.yml/badge.svg)](https://github.com/NicolasBorlet/Qualite-et-tests/actions/workflows/ci.yml)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=NicolasBorlet_Qualite-et-tests&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=NicolasBorlet_Qualite-et-tests)
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=NicolasBorlet_Qualite-et-tests&metric=coverage)](https://sonarcloud.io/summary/new_code?id=NicolasBorlet_Qualite-et-tests)
+
 ## 📋 Objectif du projet
 
 Application React de démonstration utilisant MSW (Mock Service Worker) pour simuler une API de produits. Ce projet illustre les bonnes pratiques de qualité de code, tests automatisés et intégration continue.
