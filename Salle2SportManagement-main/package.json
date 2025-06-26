@@ -7,7 +7,10 @@
         "test:integration": "cd tests && npm run test:integration",
         "test:e2e": "cd tests && npm run test:e2e",
         "test": "cd tests && npm install && npm test",
-        "install:all": "npm install && cd frontend && npm install && cd ../backend && npm install && cd ../tests && npm install"
+        "install:all": "npm install && cd frontend && npm install && cd ../backend && npm install && cd ../tests && npm install",
+        "k6:load": "k6 run tests/load/k6/load-test.js",
+        "k6:stress": "k6 run tests/load/k6/stress-test.js",
+        "k6:soak": "k6 run tests/load/k6/soak-test.js"
     },
     "workspaces": [
         "frontend",
