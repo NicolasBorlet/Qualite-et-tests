@@ -7,12 +7,13 @@ export default defineConfig({
     environment: 'jsdom',
     setupFiles: ['./tests/setup.js'],
     globals: true,
+    include: ['tests/**/*.{spec,test}.{js,jsx}'],
+    exclude: ['e2e/**/*', 'node_modules/**/*'],
     coverage: {
       provider: 'v8',
       reporter: ['text', 'lcov', 'html'],
       exclude: [
         'node_modules/',
-        'tests/',
         'e2e/',
         'dist/',
         '**/*.config.js',

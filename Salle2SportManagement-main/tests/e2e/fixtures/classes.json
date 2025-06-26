@@ -1,0 +1,345 @@
+{
+  "availableClass": {
+    "id": "e2e-class-available",
+    "title": "E2E Yoga Matinal",
+    "coach": "Sarah E2E Johnson",
+    "datetime": "2024-02-15T10:00:00.000Z",
+    "duration": 60,
+    "capacity": 15,
+    "description": "Cours de yoga matinal pour commencer la journée en douceur. Accessible à tous niveaux.",
+    "isCancelled": false,
+    "createdAt": "2024-01-10T00:00:00.000Z",
+    "createdBy": "e2e-admin-1",
+    "bookingsCount": 5,
+    "availableSpots": 10,
+    "category": "YOGA"
+  },
+
+  "almostFullClass": {
+    "id": "e2e-class-almost-full",
+    "title": "E2E Pilates Populaire",
+    "coach": "Emma E2E Thompson", 
+    "datetime": "2024-02-15T14:00:00.000Z",
+    "duration": 45,
+    "capacity": 10,
+    "description": "Cours de Pilates très demandé pour renforcer le core et améliorer la posture.",
+    "isCancelled": false,
+    "createdAt": "2024-01-10T00:00:00.000Z",
+    "createdBy": "e2e-admin-1",
+    "bookingsCount": 9,
+    "availableSpots": 1,
+    "category": "PILATES"
+  },
+
+  "fullClass": {
+    "id": "e2e-class-full",
+    "title": "E2E CrossFit Intense",
+    "coach": "Mike E2E Rodriguez",
+    "datetime": "2024-02-15T18:00:00.000Z", 
+    "duration": 90,
+    "capacity": 8,
+    "description": "Entraînement CrossFit haute intensité pour les sportifs confirmés.",
+    "isCancelled": false,
+    "createdAt": "2024-01-10T00:00:00.000Z",
+    "createdBy": "e2e-admin-1",
+    "bookingsCount": 8,
+    "availableSpots": 0,
+    "category": "CROSSFIT"
+  },
+
+  "soonClass": {
+    "id": "e2e-class-soon",
+    "title": "E2E Aqua Fitness Proche",
+    "coach": "Lisa E2E Anderson",
+    "datetime": "2024-02-15T16:30:00.000Z",
+    "duration": 60,
+    "capacity": 12,
+    "description": "Cours d'aqua fitness dans 1h30 - limite pour annulation proche.",
+    "isCancelled": false,
+    "createdAt": "2024-01-10T00:00:00.000Z",
+    "createdBy": "e2e-admin-1",
+    "bookingsCount": 3,
+    "availableSpots": 9,
+    "category": "AQUA"
+  },
+
+  "cancellableClass": {
+    "id": "e2e-class-cancellable",
+    "title": "E2E Zumba Annulable",
+    "coach": "Maria E2E Garcia",
+    "datetime": "2024-02-16T19:00:00.000Z",
+    "duration": 60,
+    "capacity": 20,
+    "description": "Cours de Zumba énergique - assez loin pour permettre l'annulation.",
+    "isCancelled": false,
+    "createdAt": "2024-01-10T00:00:00.000Z",
+    "createdBy": "e2e-admin-1",
+    "bookingsCount": 7,
+    "availableSpots": 13,
+    "category": "DANCE"
+  },
+
+  "pastClass": {
+    "id": "e2e-class-past",
+    "title": "E2E Cours Passé",
+    "coach": "Old E2E Coach",
+    "datetime": "2024-02-14T10:00:00.000Z",
+    "duration": 60,
+    "capacity": 15,
+    "description": "Cours déjà terminé pour tester l'affichage de l'historique.",
+    "isCancelled": false,
+    "createdAt": "2024-01-10T00:00:00.000Z",
+    "createdBy": "e2e-admin-1",
+    "bookingsCount": 12,
+    "availableSpots": 3,
+    "category": "YOGA"
+  },
+
+  "cancelledClass": {
+    "id": "e2e-class-cancelled",
+    "title": "E2E Cours Annulé",
+    "coach": "Cancelled E2E Coach",
+    "datetime": "2024-02-16T15:00:00.000Z",
+    "duration": 60,
+    "capacity": 10,
+    "description": "Cours annulé par l'administration pour test des notifications.",
+    "isCancelled": true,
+    "cancelledAt": "2024-02-14T10:00:00.000Z",
+    "cancelledBy": "e2e-admin-1",
+    "createdAt": "2024-01-10T00:00:00.000Z",
+    "createdBy": "e2e-admin-1",
+    "bookingsCount": 0,
+    "availableSpots": 10,
+    "category": "FITNESS"
+  },
+
+  "conflictingClasses": [
+    {
+      "id": "e2e-class-conflict-1",
+      "title": "E2E Conflit Horaire 1",
+      "coach": "Conflict E2E Coach",
+      "datetime": "2024-02-16T12:00:00.000Z",
+      "duration": 90,
+      "capacity": 8,
+      "description": "Premier cours pour test de conflit horaire utilisateur.",
+      "isCancelled": false,
+      "createdAt": "2024-01-10T00:00:00.000Z",
+      "createdBy": "e2e-admin-1",
+      "bookingsCount": 2,
+      "availableSpots": 6,
+      "category": "FITNESS"
+    },
+    {
+      "id": "e2e-class-conflict-2", 
+      "title": "E2E Conflit Horaire 2",
+      "coach": "Another E2E Coach",
+      "datetime": "2024-02-16T12:30:00.000Z",
+      "duration": 60,
+      "capacity": 10,
+      "description": "Deuxième cours qui se chevauche avec le premier (conflit horaire).",
+      "isCancelled": false,
+      "createdAt": "2024-01-10T00:00:00.000Z",
+      "createdBy": "e2e-admin-1",
+      "bookingsCount": 1,
+      "availableSpots": 9,
+      "category": "PILATES"
+    }
+  ],
+
+  "adminTestClasses": [
+    {
+      "id": "e2e-admin-class-1",
+      "title": "E2E Cours Admin Test 1",
+      "coach": "Admin E2E Coach 1",
+      "datetime": "2024-02-17T10:00:00.000Z",
+      "duration": 60,
+      "capacity": 12,
+      "description": "Cours créé pour tests admin - modification et suppression.",
+      "isCancelled": false,
+      "createdAt": "2024-01-10T00:00:00.000Z",
+      "createdBy": "e2e-admin-1",
+      "bookingsCount": 0,
+      "availableSpots": 12,
+      "category": "YOGA"
+    },
+    {
+      "id": "e2e-admin-class-with-bookings",
+      "title": "E2E Cours Admin avec Réservations",
+      "coach": "Admin E2E Coach 2",
+      "datetime": "2024-02-17T14:00:00.000Z",
+      "duration": 60,
+      "capacity": 8,
+      "description": "Cours avec réservations existantes pour tester la gestion admin.",
+      "isCancelled": false,
+      "createdAt": "2024-01-10T00:00:00.000Z",
+      "createdBy": "e2e-admin-1",
+      "bookingsCount": 3,
+      "availableSpots": 5,
+      "category": "CROSSFIT"
+    }
+  ],
+
+  "concurrentTestClass": {
+    "id": "e2e-class-concurrent",
+    "title": "E2E Cours Concurrence",
+    "coach": "Concurrent E2E Coach",
+    "datetime": "2024-02-16T17:00:00.000Z",
+    "duration": 60,
+    "capacity": 3,
+    "description": "Cours avec petite capacité pour tester les réservations simultanées.",
+    "isCancelled": false,
+    "createdAt": "2024-01-10T00:00:00.000Z",
+    "createdBy": "e2e-admin-1",
+    "bookingsCount": 0,
+    "availableSpots": 3,
+    "category": "FITNESS"
+  },
+
+  "extremeCapacityClasses": [
+    {
+      "id": "e2e-class-capacity-1",
+      "title": "E2E Cours Capacité 1",
+      "coach": "Solo E2E Coach",
+      "datetime": "2024-02-17T11:00:00.000Z",
+      "duration": 60,
+      "capacity": 1,
+      "description": "Cours avec capacité minimale (1 place) pour tests limites.",
+      "isCancelled": false,
+      "createdAt": "2024-01-10T00:00:00.000Z",
+      "createdBy": "e2e-admin-1",
+      "bookingsCount": 0,
+      "availableSpots": 1,
+      "category": "PERSONAL"
+    },
+    {
+      "id": "e2e-class-capacity-max",
+      "title": "E2E Cours Capacité Max",
+      "coach": "Crowd E2E Coach",
+      "datetime": "2024-02-17T13:00:00.000Z",
+      "duration": 60,
+      "capacity": 50,
+      "description": "Cours avec capacité maximale pour tests de performance.",
+      "isCancelled": false,
+      "createdAt": "2024-01-10T00:00:00.000Z",
+      "createdBy": "e2e-admin-1",
+      "bookingsCount": 25,
+      "availableSpots": 25,
+      "category": "GROUP"
+    }
+  ],
+
+  "specialTimingClasses": [
+    {
+      "id": "e2e-class-2h-limit",
+      "title": "E2E Cours Limite 2h",
+      "coach": "Timing E2E Coach",
+      "datetime": "2024-02-15T17:00:00.000Z",
+      "duration": 60,
+      "capacity": 10,
+      "description": "Cours exactement à 2h pour tester la limite d'annulation.",
+      "isCancelled": false,
+      "createdAt": "2024-01-10T00:00:00.000Z",
+      "createdBy": "e2e-admin-1",
+      "bookingsCount": 2,
+      "availableSpots": 8,
+      "category": "FITNESS"
+    },
+    {
+      "id": "e2e-class-1h-59m",
+      "title": "E2E Cours 1h59m",
+      "coach": "Late E2E Coach", 
+      "datetime": "2024-02-15T16:29:00.000Z",
+      "duration": 60,
+      "capacity": 10,
+      "description": "Cours à 1h59m pour tester les cas limites d'annulation tardive.",
+      "isCancelled": false,
+      "createdAt": "2024-01-10T00:00:00.000Z",
+      "createdBy": "e2e-admin-1",
+      "bookingsCount": 1,
+      "availableSpots": 9,
+      "category": "FITNESS"
+    }
+  ],
+
+  "coachConflictClasses": [
+    {
+      "id": "e2e-coach-conflict-existing",
+      "title": "E2E Coach Existant",
+      "coach": "Busy E2E Coach",
+      "datetime": "2024-02-18T10:00:00.000Z",
+      "duration": 60,
+      "capacity": 15,
+      "description": "Cours existant pour tester les conflits de coach.",
+      "isCancelled": false,
+      "createdAt": "2024-01-10T00:00:00.000Z",
+      "createdBy": "e2e-admin-1",
+      "bookingsCount": 5,
+      "availableSpots": 10,
+      "category": "YOGA"
+    }
+  ],
+
+  "categoriesData": {
+    "YOGA": {
+      "name": "Yoga",
+      "description": "Cours de yoga pour tous niveaux",
+      "color": "#8B5CF6"
+    },
+    "PILATES": {
+      "name": "Pilates", 
+      "description": "Renforcement musculaire et posture",
+      "color": "#EC4899"
+    },
+    "CROSSFIT": {
+      "name": "CrossFit",
+      "description": "Entraînement fonctionnel haute intensité",
+      "color": "#EF4444"
+    },
+    "AQUA": {
+      "name": "Aqua Fitness",
+      "description": "Cours aquatiques dans la piscine",
+      "color": "#06B6D4"
+    },
+    "DANCE": {
+      "name": "Danse",
+      "description": "Cours de danse et chorégraphies",
+      "color": "#F59E0B"
+    },
+    "FITNESS": {
+      "name": "Fitness",
+      "description": "Cours de fitness général",
+      "color": "#10B981"
+    },
+    "PERSONAL": {
+      "name": "Personnel",
+      "description": "Cours particuliers individuels",
+      "color": "#6B7280"
+    },
+    "GROUP": {
+      "name": "Groupe",
+      "description": "Cours en grand groupe",
+      "color": "#8B5CF6"
+    }
+  },
+
+  "timeSlots": {
+    "morning": ["08:00", "09:00", "10:00", "11:00"],
+    "afternoon": ["12:00", "13:00", "14:00", "15:00", "16:00"], 
+    "evening": ["17:00", "18:00", "19:00", "20:00", "21:00"]
+  },
+
+  "durations": {
+    "short": 30,
+    "standard": 60,
+    "long": 90,
+    "extended": 120
+  },
+
+  "capacities": {
+    "personal": 1,
+    "small": 8,
+    "medium": 15,
+    "large": 25,
+    "extra_large": 50
+  }
+}
