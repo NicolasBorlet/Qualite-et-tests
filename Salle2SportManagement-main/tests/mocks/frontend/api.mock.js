@@ -3,7 +3,7 @@
  * Simule les appels HTTP vers le backend
  */
 
-const { jest } = require('@jest/globals');
+import { vi } from 'vitest';
 
 // États de réponse HTTP
 const HTTP_STATUS = {
@@ -23,11 +23,11 @@ const HTTP_STATUS = {
 const apiClientMock = {
   // === MÉTHODES HTTP DE BASE ===
   
-  get: jest.fn(),
-  post: jest.fn(),
-  put: jest.fn(),
-  patch: jest.fn(),
-  delete: jest.fn(),
+  get: vi.fn(),
+  post: vi.fn(),
+  put: vi.fn(),
+  patch: vi.fn(),
+  delete: vi.fn(),
 
   // === CONFIGURATION ===
   defaults: {
@@ -41,12 +41,12 @@ const apiClientMock = {
   // === INTERCEPTORS ===
   interceptors: {
     request: {
-      use: jest.fn(),
-      eject: jest.fn()
+      use: vi.fn(),
+      eject: vi.fn()
     },
     response: {
-      use: jest.fn(),
-      eject: jest.fn()
+      use: vi.fn(),
+      eject: vi.fn()
     }
   }
 };
@@ -56,7 +56,7 @@ const apiClientMock = {
  */
 const gymServiceMock = {
   // === DASHBOARD ===
-  getUserDashboard: jest.fn(async (userId) => {
+  getUserDashboard: vi.fn(async (userId) => {
     return {
       data: {
         user: {
@@ -81,7 +81,7 @@ const gymServiceMock = {
     };
   }),
 
-  getAdminDashboard: jest.fn(async () => {
+  getAdminDashboard: vi.fn(async () => {
     return {
       data: {
         stats: {
@@ -101,13 +101,13 @@ const gymServiceMock = {
   }),
 
   // === CLASSES ===
-  getAllClasses: jest.fn(async () => {
+  getAllClasses: vi.fn(async () => {
     return {
       data: []
     };
   }),
 
-  getClass: jest.fn(async (classId) => {
+  getClass: vi.fn(async (classId) => {
     return {
       data: {
         id: classId,
@@ -122,7 +122,7 @@ const gymServiceMock = {
     };
   }),
 
-  createClass: jest.fn(async (classData) => {
+  createClass: vi.fn(async (classData) => {
     return {
       data: {
         id: 'new-class-id',
@@ -132,7 +132,7 @@ const gymServiceMock = {
     };
   }),
 
-  updateClass: jest.fn(async (classId, updateData) => {
+  updateClass: vi.fn(async (classId, updateData) => {
     return {
       data: {
         id: classId,
@@ -141,26 +141,26 @@ const gymServiceMock = {
     };
   }),
 
-  deleteClass: jest.fn(async (classId) => {
+  deleteClass: vi.fn(async (classId) => {
     return {
       data: { message: 'Class deleted successfully' }
     };
   }),
 
   // === BOOKINGS ===
-  getUserBookings: jest.fn(async (userId) => {
+  getUserBookings: vi.fn(async (userId) => {
     return {
       data: []
     };
   }),
 
-  getAllBookings: jest.fn(async () => {
+  getAllBookings: vi.fn(async () => {
     return {
       data: []
     };
   }),
 
-  createBooking: jest.fn(async (userId, classId) => {
+  createBooking: vi.fn(async (userId, classId) => {
     return {
       data: {
         id: 'new-booking-id',
@@ -172,7 +172,7 @@ const gymServiceMock = {
     };
   }),
 
-  cancelBooking: jest.fn(async (bookingId, userId) => {
+  cancelBooking: vi.fn(async (bookingId, userId) => {
     return {
       data: {
         id: bookingId,
@@ -182,7 +182,7 @@ const gymServiceMock = {
     };
   }),
 
-  updateBookingStatus: jest.fn(async (bookingId, status) => {
+  updateBookingStatus: vi.fn(async (bookingId, status) => {
     return {
       data: {
         id: bookingId,
@@ -193,13 +193,13 @@ const gymServiceMock = {
   }),
 
   // === USERS ===
-  getAllUsers: jest.fn(async () => {
+  getAllUsers: vi.fn(async () => {
     return {
       data: []
     };
   }),
 
-  getUser: jest.fn(async (userId) => {
+  getUser: vi.fn(async (userId) => {
     return {
       data: {
         id: userId,
@@ -212,7 +212,7 @@ const gymServiceMock = {
     };
   }),
 
-  createUser: jest.fn(async (userData) => {
+  createUser: vi.fn(async (userData) => {
     return {
       data: {
         id: 'new-user-id',
@@ -222,7 +222,7 @@ const gymServiceMock = {
     };
   }),
 
-  updateUser: jest.fn(async (userId, updateData) => {
+  updateUser: vi.fn(async (userId, updateData) => {
     return {
       data: {
         id: userId,
@@ -231,14 +231,14 @@ const gymServiceMock = {
     };
   }),
 
-  deleteUser: jest.fn(async (userId) => {
+  deleteUser: vi.fn(async (userId) => {
     return {
       data: { message: 'User deleted successfully' }
     };
   }),
 
   // === SUBSCRIPTIONS ===
-  getUserSubscription: jest.fn(async (userId) => {
+  getUserSubscription: vi.fn(async (userId) => {
     return {
       data: {
         id: 'subscription-id',
@@ -252,13 +252,13 @@ const gymServiceMock = {
     };
   }),
 
-  getAllSubscriptions: jest.fn(async () => {
+  getAllSubscriptions: vi.fn(async () => {
     return {
       data: []
     };
   }),
 
-  createSubscription: jest.fn(async (subscriptionData) => {
+  createSubscription: vi.fn(async (subscriptionData) => {
     return {
       data: {
         id: 'new-subscription-id',
@@ -269,7 +269,7 @@ const gymServiceMock = {
     };
   }),
 
-  updateSubscription: jest.fn(async (subscriptionId, updateData) => {
+  updateSubscription: vi.fn(async (subscriptionId, updateData) => {
     return {
       data: {
         id: subscriptionId,
@@ -278,13 +278,13 @@ const gymServiceMock = {
     };
   }),
 
-  deleteSubscription: jest.fn(async (subscriptionId) => {
+  deleteSubscription: vi.fn(async (subscriptionId) => {
     return {
       data: { message: 'Subscription deleted successfully' }
     };
   }),
 
-  calculateMonthlyBilling: jest.fn(async (userId) => {
+  calculateMonthlyBilling: vi.fn(async (userId) => {
     return {
       data: {
         userId,
@@ -313,7 +313,7 @@ const apiMockScenarios = {
   successfulResponses: () => {
     // Réinitialise tous les mocks avec des réponses de succès
     Object.keys(gymServiceMock).forEach(method => {
-      if (jest.isMockFunction(gymServiceMock[method])) {
+      if (vi.isMockFunction(gymServiceMock[method])) {
         gymServiceMock[method].mockClear();
       }
     });
@@ -327,7 +327,7 @@ const apiMockScenarios = {
     networkError.code = 'NETWORK_ERROR';
     
     Object.keys(gymServiceMock).forEach(method => {
-      if (jest.isMockFunction(gymServiceMock[method])) {
+      if (vi.isMockFunction(gymServiceMock[method])) {
         gymServiceMock[method].mockRejectedValue(networkError);
       }
     });
@@ -402,7 +402,7 @@ const apiMockScenarios = {
     };
     
     Object.keys(gymServiceMock).forEach(method => {
-      if (jest.isMockFunction(gymServiceMock[method])) {
+      if (vi.isMockFunction(gymServiceMock[method])) {
         gymServiceMock[method].mockRejectedValueOnce(serverError);
       }
     });
@@ -474,13 +474,13 @@ const apiMockScenarios = {
    */
   reset: () => {
     Object.keys(gymServiceMock).forEach(method => {
-      if (jest.isMockFunction(gymServiceMock[method])) {
+      if (vi.isMockFunction(gymServiceMock[method])) {
         gymServiceMock[method].mockReset();
       }
     });
     
     Object.keys(apiClientMock).forEach(method => {
-      if (jest.isMockFunction(apiClientMock[method])) {
+      if (vi.isMockFunction(apiClientMock[method])) {
         apiClientMock[method].mockReset();
       }
     });
@@ -538,7 +538,7 @@ const apiMockData = {
   }
 };
 
-module.exports = {
+export {
   apiClientMock,
   gymServiceMock,
   apiMockScenarios,

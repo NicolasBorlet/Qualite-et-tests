@@ -3,8 +3,6 @@
  * Simule toutes les opérations CRUD sur les entités du système
  */
 
-const { jest } = require('@jest/globals');
-
 // Mock data store pour simuler la persistance
 const mockDataStore = {
   users: new Map(),
@@ -45,20 +43,20 @@ const prismaMock = {
     findMany: jest.fn((params = {}) => {
       const users = Array.from(mockDataStore.users.values());
       const { where, orderBy, take, skip } = params;
-      
+
       let filteredUsers = users;
-      
+
       // Filtrage basique
       if (where) {
         if (where.role) {
           filteredUsers = filteredUsers.filter(u => u.role === where.role);
         }
       }
-      
+
       // Pagination
       if (skip) filteredUsers = filteredUsers.slice(skip);
       if (take) filteredUsers = filteredUsers.slice(0, take);
-      
+
       return Promise.resolve(filteredUsers);
     }),
 
@@ -98,14 +96,14 @@ const prismaMock = {
     count: jest.fn((params = {}) => {
       const users = Array.from(mockDataStore.users.values());
       const { where } = params;
-      
+
       if (!where) return Promise.resolve(users.length);
-      
+
       let filteredUsers = users;
       if (where.role) {
         filteredUsers = filteredUsers.filter(u => u.role === where.role);
       }
-      
+
       return Promise.resolve(filteredUsers.length);
     }),
   },
@@ -121,9 +119,9 @@ const prismaMock = {
     findMany: jest.fn((params = {}) => {
       const classes = Array.from(mockDataStore.classes.values());
       const { where, orderBy, include } = params;
-      
+
       let filteredClasses = classes;
-      
+
       if (where) {
         if (where.datetime) {
           if (where.datetime.gte) {
@@ -137,7 +135,7 @@ const prismaMock = {
           filteredClasses = filteredClasses.filter(c => c.isCancelled === where.isCancelled);
         }
       }
-      
+
       // Simulation d'inclusion des bookings
       if (include?.bookings) {
         filteredClasses = filteredClasses.map(c => ({
@@ -146,7 +144,7 @@ const prismaMock = {
             .filter(b => b.classId === c.id)
         }));
       }
-      
+
       return Promise.resolve(filteredClasses);
     }),
 
@@ -186,20 +184,20 @@ const prismaMock = {
       const { where } = params;
       const classes = Array.from(mockDataStore.classes.values());
       let deletedCount = 0;
-      
+
       classes.forEach(c => {
         let shouldDelete = true;
-        
+
         if (where.datetime?.lt) {
           shouldDelete = shouldDelete && c.datetime < where.datetime.lt;
         }
-        
+
         if (shouldDelete) {
           mockDataStore.classes.delete(c.id);
           deletedCount++;
         }
       });
-      
+
       return Promise.resolve({ count: deletedCount });
     }),
   },
@@ -209,17 +207,17 @@ const prismaMock = {
     findUnique: jest.fn((params) => {
       const { where, include } = params;
       let booking = null;
-      
+
       if (where.id) {
         booking = mockDataStore.bookings.get(where.id);
       } else if (where.userId_classId) {
         booking = Array.from(mockDataStore.bookings.values())
-          .find(b => b.userId === where.userId_classId.userId && 
+          .find(b => b.userId === where.userId_classId.userId &&
                      b.classId === where.userId_classId.classId);
       }
-      
+
       if (!booking) return Promise.resolve(null);
-      
+
       // Simulation des relations
       if (include) {
         if (include.user) {
@@ -229,16 +227,16 @@ const prismaMock = {
           booking.class = mockDataStore.classes.get(booking.classId);
         }
       }
-      
+
       return Promise.resolve(booking);
     }),
 
     findMany: jest.fn((params = {}) => {
       const bookings = Array.from(mockDataStore.bookings.values());
-      const { where, include, orderBy } = params;
-      
+      const { where, include, orderBy, take, skip } = params;
+
       let filteredBookings = bookings;
-      
+
       if (where) {
         if (where.userId) {
           filteredBookings = filteredBookings.filter(b => b.userId === where.userId);
@@ -255,7 +253,7 @@ const prismaMock = {
           filteredBookings = filteredBookings.filter(b => {
             const classItem = mockDataStore.classes.get(b.classId);
             if (!classItem) return false;
-            
+
             if (classDateFilter.lt) {
               return classItem.datetime < classDateFilter.lt;
             }
@@ -266,7 +264,7 @@ const prismaMock = {
           });
         }
       }
-      
+
       // Simulation des relations
       if (include) {
         filteredBookings = filteredBookings.map(b => {
@@ -280,28 +278,32 @@ const prismaMock = {
           return enhanced;
         });
       }
-      
+
+      // Pagination
+      if (skip) filteredBookings = filteredBookings.slice(skip);
+      if (take) filteredBookings = filteredBookings.slice(0, take);
+
       return Promise.resolve(filteredBookings);
     }),
 
     create: jest.fn((params) => {
       const { data } = params;
-      
+
       // Vérification des contraintes uniques
       const existingBooking = Array.from(mockDataStore.bookings.values())
         .find(b => b.userId === data.userId && b.classId === data.classId);
-      
+
       if (existingBooking) {
         throw new Error('Unique constraint violation');
       }
-      
+
       const newBooking = {
         id: generateMockId(),
         status: 'CONFIRMED',
         createdAt: new Date(),
         ...data,
       };
-      
+
       mockDataStore.bookings.set(newBooking.id, newBooking);
       return Promise.resolve(newBooking);
     }),
@@ -321,10 +323,10 @@ const prismaMock = {
       const { where, data } = params;
       const bookings = Array.from(mockDataStore.bookings.values());
       let updatedCount = 0;
-      
+
       bookings.forEach(b => {
         let shouldUpdate = true;
-        
+
         if (where.status) {
           shouldUpdate = shouldUpdate && b.status === where.status;
         }
@@ -332,14 +334,14 @@ const prismaMock = {
           const classItem = mockDataStore.classes.get(b.classId);
           shouldUpdate = shouldUpdate && classItem && classItem.datetime < where.class.datetime.lt;
         }
-        
+
         if (shouldUpdate) {
           const updated = { ...b, ...data };
           mockDataStore.bookings.set(b.id, updated);
           updatedCount++;
         }
       });
-      
+
       return Promise.resolve({ count: updatedCount });
     }),
 
@@ -356,14 +358,14 @@ const prismaMock = {
     count: jest.fn((params = {}) => {
       const bookings = Array.from(mockDataStore.bookings.values());
       const { where } = params;
-      
+
       if (!where) return Promise.resolve(bookings.length);
-      
+
       let filteredBookings = bookings;
       if (where.status) {
         filteredBookings = filteredBookings.filter(b => b.status === where.status);
       }
-      
+
       return Promise.resolve(filteredBookings.length);
     }),
   },
@@ -373,30 +375,30 @@ const prismaMock = {
     findUnique: jest.fn((params) => {
       const { where, include } = params;
       let subscription = null;
-      
+
       if (where.id) {
         subscription = mockDataStore.subscriptions.get(where.id);
       } else if (where.userId) {
         subscription = Array.from(mockDataStore.subscriptions.values())
           .find(s => s.userId === where.userId);
       }
-      
+
       if (!subscription) return Promise.resolve(null);
-      
+
       // Simulation des relations
       if (include?.user) {
         subscription.user = mockDataStore.users.get(subscription.userId);
       }
-      
+
       return Promise.resolve(subscription);
     }),
 
     findMany: jest.fn((params = {}) => {
       const subscriptions = Array.from(mockDataStore.subscriptions.values());
       const { where, include } = params;
-      
+
       let filteredSubscriptions = subscriptions;
-      
+
       if (where) {
         if (where.active !== undefined) {
           filteredSubscriptions = filteredSubscriptions.filter(s => s.active === where.active);
@@ -405,7 +407,7 @@ const prismaMock = {
           filteredSubscriptions = filteredSubscriptions.filter(s => s.planType === where.planType);
         }
       }
-      
+
       // Simulation des relations
       if (include?.user) {
         filteredSubscriptions = filteredSubscriptions.map(s => ({
@@ -413,28 +415,28 @@ const prismaMock = {
           user: mockDataStore.users.get(s.userId)
         }));
       }
-      
+
       return Promise.resolve(filteredSubscriptions);
     }),
 
     create: jest.fn((params) => {
       const { data } = params;
-      
+
       // Vérification de la contrainte unique userId
       const existingSubscription = Array.from(mockDataStore.subscriptions.values())
         .find(s => s.userId === data.userId);
-      
+
       if (existingSubscription) {
         throw new Error('User already has a subscription');
       }
-      
+
       const newSubscription = {
         id: generateMockId(),
         autoRenew: true,
         active: true,
         ...data,
       };
-      
+
       mockDataStore.subscriptions.set(newSubscription.id, newSubscription);
       return Promise.resolve(newSubscription);
     }),
@@ -459,6 +461,20 @@ const prismaMock = {
       mockDataStore.subscriptions.delete(where.id);
       return Promise.resolve(existing);
     }),
+
+    count: jest.fn((params = {}) => {
+      const subscriptions = Array.from(mockDataStore.subscriptions.values());
+      const { where } = params;
+
+      if (!where) return Promise.resolve(subscriptions.length);
+
+      let filteredSubscriptions = subscriptions;
+      if (where.active !== undefined) {
+        filteredSubscriptions = filteredSubscriptions.filter(s => s.active === where.active);
+      }
+
+      return Promise.resolve(filteredSubscriptions.length);
+    }),
   },
 
   // === TRANSACTION SUPPORT ===
@@ -481,7 +497,7 @@ const mockHelpers = {
     mockIdCounter = 1;
     jest.clearAllMocks();
   },
-  
+
   // Ajoute des données de test
   seedData: (data) => {
     if (data.users) {
@@ -505,7 +521,7 @@ const mockHelpers = {
       });
     }
   },
-  
+
   // Accès au store pour vérifications
   getStore: () => mockDataStore,
 };

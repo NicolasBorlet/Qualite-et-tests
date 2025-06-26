@@ -19,19 +19,7 @@ Object.defineProperty(window, 'localStorage', {
   value: localStorageMock
 });
 
-// Mock des composables Vue
-vi.mock('vue', () => ({
-  ref: vi.fn((value) => ({
-    value,
-    get value() { return this._value; },
-    set value(newValue) { this._value = newValue; },
-    _value: value
-  })),
-  computed: vi.fn((fn) => ({
-    get value() { return fn(); }
-  })),
-  readonly: vi.fn((ref) => ref)
-}));
+// Vue composables are now available globally via vitest.setup.js
 
 describe('Auth Store - Tests Unitaires', () => {
   let authStore;

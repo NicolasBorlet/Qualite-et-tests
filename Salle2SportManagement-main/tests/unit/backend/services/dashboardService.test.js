@@ -3,7 +3,7 @@
  * Teste l'agrégation de données et métriques pour tableaux de bord
  */
 
-const { describe, test, expect, beforeEach, afterEach, jest } = require('@jest/globals');
+const { afterEach, beforeEach, describe, expect, test } = require('@jest/globals');
 const { prismaMock } = require('../../../mocks/backend/prisma.mock');
 const { timeMock, timeUtils } = require('../../../mocks/utils/time.mock');
 
@@ -32,7 +32,7 @@ const createDashboardService = (prismaClient) => {
 
       // Statistiques des réservations
       const bookingStats = await this._getUserBookingStats(userId);
-      
+
       // Réservations récentes
       const recentBookings = await prismaClient.booking.findMany({
         where: { userId },
@@ -93,7 +93,7 @@ const createDashboardService = (prismaClient) => {
 
       // Statistiques des cours populaires
       const popularClasses = await this._getPopularClasses();
-      
+
       // Utilisateurs récents
       const recentUsers = await prismaClient.user.findMany({
         orderBy: { dateJoined: 'desc' },
@@ -178,7 +178,7 @@ const createDashboardService = (prismaClient) => {
         const basePrice = this._getSubscriptionPrice(sub.planType);
         const loyaltyDiscount = this._calculateLoyaltyDiscount(sub);
         const penalties = 0; // Simplifié pour ce test
-        
+
         return total + (basePrice - loyaltyDiscount + penalties);
       }, 0);
     },
@@ -557,6 +557,11 @@ describe('Dashboard Service - Tests Unitaires', () => {
       test('should handle database errors gracefully', async () => {
         // Arrange
         prismaMock.user.count.mockRejectedValue(new Error('Database error'));
+        prismaMock.subscription.count.mockResolvedValue(0);
+        prismaMock.booking.count.mockResolvedValue(0);
+        prismaMock.subscription.findMany.mockResolvedValue([]);
+        prismaMock.class.findMany.mockResolvedValue([]);
+        prismaMock.user.findMany.mockResolvedValue([]);
 
         // Act & Assert
         await expect(
@@ -667,14 +672,14 @@ describe('Dashboard Service - Tests Unitaires', () => {
       test('should execute admin dashboard queries in parallel', async () => {
         // Arrange
         const startTime = Date.now();
-        
-        prismaMock.user.count.mockImplementation(() => 
+
+        prismaMock.user.count.mockImplementation(() =>
           new Promise(resolve => setTimeout(() => resolve(100), 50))
         );
-        prismaMock.subscription.count.mockImplementation(() => 
+        prismaMock.subscription.count.mockImplementation(() =>
           new Promise(resolve => setTimeout(() => resolve(95), 50))
         );
-        prismaMock.booking.count.mockImplementation(() => 
+        prismaMock.booking.count.mockImplementation(() =>
           new Promise(resolve => setTimeout(() => resolve(500), 50))
         );
         prismaMock.subscription.findMany.mockResolvedValue([]);
@@ -715,7 +720,10 @@ describe('Dashboard Service - Tests Unitaires', () => {
 
         prismaMock.user.findUnique.mockResolvedValue(mockUser);
         prismaMock.booking.count.mockResolvedValue(0);
-        prismaMock.booking.findMany.mockResolvedValue(manyBookings);
+        prismaMock.booking.findMany.mockImplementation((params) => {
+          const { take = manyBookings.length } = params || {};
+          return Promise.resolve(manyBookings.slice(0, take));
+        });
 
         // Act
         const result = await dashboardService.getUserDashboard('user-many-bookings');
@@ -830,7 +838,7 @@ describe('Dashboard Service - Tests Unitaires', () => {
         expect(result.stats.noShowBookings).toBe(1);
         expect(result.stats.noShowRate).toBeCloseTo(12.5, 1); // 1/8 * 100
         expect(result.recentBookings).toHaveLength(3);
-        
+
         // Vérification de l'ordre des réservations (plus récent en premier)
         expect(result.recentBookings[0].id).toBe('booking-confirmed');
         expect(result.recentBookings[1].id).toBe('booking-cancelled');

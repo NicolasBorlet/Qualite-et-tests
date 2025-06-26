@@ -1,5 +1,7 @@
 # Gym Management System
 
+[![CI](https://github.com/${{github.repository}}/actions/workflows/ci.yml/badge.svg?branch=dev)](https://github.com/${{github.repository}}/actions/workflows/ci.yml)
+
 A complete fullstack gym management application built with modern web technologies.
 
 ## Features
@@ -62,7 +64,7 @@ A complete fullstack gym management application built with modern web technologi
    ```bash
    cp .env.example .env
    ```
-   
+
    Edit `.env` file if needed (default values should work for development).
 
 3. **Start the application**
@@ -86,7 +88,7 @@ The application comes with seeded test data:
 
 **Regular Users:**
 - Email: john.doe@email.com
-- Email: jane.smith@email.com  
+- Email: jane.smith@email.com
 - Email: mike.wilson@email.com
 - Password: password123 (for all users)
 
@@ -202,7 +204,7 @@ docker exec -it gym_db psql -U postgres -d gym_management
 
 ### Subscription System
 - **STANDARD**: €30/month, €5 per no-show
-- **PREMIUM**: €50/month, €3 per no-show  
+- **PREMIUM**: €50/month, €3 per no-show
 - **ETUDIANT**: €20/month, €7 per no-show
 
 ### Booking Rules

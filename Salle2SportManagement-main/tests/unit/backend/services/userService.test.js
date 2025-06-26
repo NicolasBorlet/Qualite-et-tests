@@ -3,10 +3,8 @@
  * Teste la gestion des utilisateurs et validation d'unicité
  */
 
-const { jest } = require('@jest/globals');
-const { prismaMock, mockHelpers } = require('../../../mocks/backend/prisma.mock');
-const { dataHelpers, assertionHelpers } = require('../../../mocks/utils/test-helpers');
-const { UserFactory } = require('../../../factories/user.factory');
+const { prismaMock } = require('../../../mocks/backend/prisma.mock');
+const { dataHelpers } = require('../../../utils/test-helpers');
 
 // Mock du service pour les tests
 class MockUserService {
@@ -95,11 +93,11 @@ class MockUserService {
 
   async getAllUsers(filters = {}) {
     const where = {};
-    
+
     if (filters.role) {
       where.role = filters.role;
     }
-    
+
     if (filters.search) {
       where.OR = [
         { firstname: { contains: filters.search, mode: 'insensitive' } },
@@ -197,14 +195,10 @@ describe('UserService - Tests Unitaires', () => {
         });
       } else {
         prismaMock.user.findUnique.mockResolvedValue(null);
-        prismaMock.user.create.mockResolvedValue({
+        prismaMock.user.create.mockImplementation(({ data }) => Promise.resolve({
           id: 'new-user-1',
-          email: 'new@example.com',
-          firstname: 'New',
-          lastname: 'User',
-          role: 'USER',
-          dateJoined: new Date()
-        });
+          ...data
+        }));
       }
     };
 

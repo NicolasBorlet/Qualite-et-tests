@@ -3,7 +3,7 @@
  * Fonctions helper pour simplifier l'écriture et la maintenance des tests
  */
 
-const { prismaMock, mockHelpers } = require('../mocks/backend/prisma.mock');
+const { mockHelpers } = require('../mocks/backend/prisma.mock');
 const { timeMock, timeUtils } = require('../mocks/utils/time.mock');
 
 /**
@@ -16,10 +16,10 @@ const dataHelpers = {
   setupTestEnvironment: () => {
     // Réinitialise les mocks Prisma
     mockHelpers.resetAll();
-    
+
     // Réinitialise le mock de temps
     timeMock.reset();
-    
+
     // Configure une date fixe pour les tests
     timeMock.enable('2024-01-15T14:30:00.000Z');
   },
@@ -30,7 +30,7 @@ const dataHelpers = {
   cleanupTestEnvironment: () => {
     // Désactive le mock de temps
     timeMock.disable();
-    
+
     // Reset des mocks Prisma
     mockHelpers.resetAll();
   },
@@ -274,7 +274,7 @@ const eventHelpers = {
   simulateNearCancellationDeadline: () => {
     const classTime = timeUtils.futureDate(1.5); // 1h30 dans le futur
     const canCancel = false; // Trop tard pour annuler
-    
+
     return {
       classTime,
       canCancel,
@@ -289,7 +289,7 @@ const eventHelpers = {
   simulateCancellableClass: () => {
     const classTime = timeUtils.futureDate(4); // 4h dans le futur
     const canCancel = true;
-    
+
     return {
       classTime,
       canCancel,
@@ -379,7 +379,7 @@ const performanceHelpers = {
     const startTime = performance.now();
     const result = await fn();
     const endTime = performance.now();
-    
+
     return {
       result,
       executionTime: endTime - startTime

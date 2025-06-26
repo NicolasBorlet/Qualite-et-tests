@@ -121,7 +121,7 @@ const MockDashboardView = {
   },
   computed: {
     user() {
-      return this.$authStore.currentUser;
+      return this.$authStore.currentUser.value;
     }
   },
   async mounted() {

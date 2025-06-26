@@ -126,7 +126,7 @@ const DashboardView = {
   },
   computed: {
     user() {
-      return this.$authStore.currentUser;
+      return this.$authStore.currentUser.value;
     },
     stats() {
       return this.dashboardData?.stats || {};
@@ -343,8 +343,13 @@ describe('DashboardView - Tests Unitaires', () => {
       global: {
         plugins: [router, pinia],
         provide: {
-          $authStore: authStore,
           $gymService: gymServiceMock
+        },
+        config: {
+          globalProperties: {
+            $authStore: authStore,
+            $gymService: gymServiceMock
+          }
         }
       }
     });
@@ -421,7 +426,7 @@ describe('DashboardView - Tests Unitaires', () => {
         // Assert
         expect(wrapper.find('[data-testid="plan-type"]').text()).toBe('STANDARD');
         expect(wrapper.find('[data-testid="subscription-status"]').text()).toBe('Actif');
-        expect(wrapper.find('[data-testid="subscription-status"]')).toHaveClass('status-active');
+        expect(wrapper.find('[data-testid="subscription-status"]').classes()).toContain('status-active');
       });
 
       test('should handle user without subscription', async () => {
@@ -453,11 +458,16 @@ describe('DashboardView - Tests Unitaires', () => {
         gymServiceMock.getUserDashboard.mockImplementation(() => 
           new Promise(resolve => setTimeout(resolve, 100))
         );
-        gymServiceMock.getAllClasses.mockResolvedValue({ data: [] });
-        gymServiceMock.getUserBookings.mockResolvedValue({ data: [] });
+        gymServiceMock.getAllClasses.mockImplementation(() => 
+          new Promise(resolve => setTimeout(resolve, 100))
+        );
+        gymServiceMock.getUserBookings.mockImplementation(() => 
+          new Promise(resolve => setTimeout(resolve, 100))
+        );
 
         // Act
         wrapper = createWrapper();
+        await wrapper.vm.$nextTick();
 
         // Assert
         expect(wrapper.find('[data-testid="loading"]').exists()).toBe(true);

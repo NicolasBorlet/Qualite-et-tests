@@ -44,19 +44,19 @@ class MockClassApiApp {
   async handleRequest(method, path, body = {}, headers = {}) {
     const routeKey = `${method}:${path}`;
     const handler = this.routes.get(routeKey);
-    
+
     if (!handler) {
       return { status: 404, body: { error: 'Route not found' } };
     }
 
-    const req = { 
-      body, 
-      headers, 
+    const req = {
+      body,
+      headers,
       params: this.extractParams(path),
       query: {},
       user: headers.authorization ? this.authenticateUser(headers.authorization) : null
     };
-    
+
     const res = {
       status: function(code) { this.statusCode = code; return this; },
       json: function(data) { this.body = data; return this; },
@@ -89,12 +89,12 @@ const createIntegratedClassServices = (testDatabase) => {
   return {
     async getAllClasses() {
       const classes = Array.from(testDatabase.classes.values());
-      
+
       // Ajouter les informations de réservation pour chaque cours
       return classes.map(cls => {
         const bookings = Array.from(testDatabase.bookings.values())
           .filter(b => b.classId === cls.id && b.status === 'CONFIRMED');
-        
+
         return {
           ...cls,
           bookingsCount: bookings.length,
@@ -110,9 +110,9 @@ const createIntegratedClassServices = (testDatabase) => {
 
       const bookings = Array.from(testDatabase.bookings.values())
         .filter(b => b.classId === classId);
-      
+
       const confirmedBookings = bookings.filter(b => b.status === 'CONFIRMED');
-      
+
       return {
         ...cls,
         bookings: bookings.map(booking => ({
@@ -150,7 +150,7 @@ const createIntegratedClassServices = (testDatabase) => {
       const existingClasses = Array.from(testDatabase.classes.values());
       const hasCoachConflict = existingClasses.some(existing => {
         if (existing.coach !== classData.coach) return false;
-        
+
         const existingStart = new Date(existing.datetime);
         const existingEnd = new Date(existingStart.getTime() + existing.duration * 60000);
         const newStart = new Date(classData.datetime);
@@ -202,7 +202,7 @@ const createIntegratedClassServices = (testDatabase) => {
       if (updateData.capacity !== undefined) {
         const confirmedBookings = Array.from(testDatabase.bookings.values())
           .filter(b => b.classId === classId && b.status === 'CONFIRMED').length;
-        
+
         if (updateData.capacity < confirmedBookings) {
           throw new Error('Cannot reduce capacity below confirmed bookings');
         }
@@ -212,13 +212,13 @@ const createIntegratedClassServices = (testDatabase) => {
       if (updateData.datetime || updateData.coach) {
         const newDatetime = updateData.datetime || existingClass.datetime;
         const newCoach = updateData.coach || existingClass.coach;
-        
+
         const otherClasses = Array.from(testDatabase.classes.values())
           .filter(cls => cls.id !== classId);
-        
+
         const hasConflict = otherClasses.some(cls => {
           if (cls.coach !== newCoach) return false;
-          
+
           const existingStart = new Date(cls.datetime);
           const existingEnd = new Date(existingStart.getTime() + cls.duration * 60000);
           const newStart = new Date(newDatetime);
@@ -257,7 +257,7 @@ const createIntegratedClassServices = (testDatabase) => {
       // Vérification s'il y a des réservations actives
       const activeBookings = Array.from(testDatabase.bookings.values())
         .filter(b => b.classId === classId && b.status === 'CONFIRMED');
-      
+
       if (activeBookings.length > 0) {
         throw new Error('Cannot delete class with active bookings');
       }
@@ -294,7 +294,7 @@ const createIntegratedClassServices = (testDatabase) => {
       // Annuler toutes les réservations actives
       const activeBookings = Array.from(testDatabase.bookings.values())
         .filter(b => b.classId === classId && b.status === 'CONFIRMED');
-      
+
       activeBookings.forEach(booking => {
         testDatabase.bookings.set(booking.id, {
           ...booking,
@@ -331,11 +331,11 @@ const createIntegratedClassApp = () => {
     try {
       const { id } = req.params;
       const classWithDetails = await classServices.getClassById(id);
-      
+
       if (!classWithDetails) {
         return res.status(404).json({ error: 'Class not found' });
       }
-      
+
       res.json(classWithDetails);
     } catch (error) {
       res.status(400).json({ error: error.message });
@@ -526,7 +526,7 @@ describe('Class Routes - Tests d\'Intégration', () => {
         // Assert
         expect(response.status).toBe(200);
         expect(response.body).toHaveLength(3);
-        
+
         const class1 = response.body.find(c => c.id === 'class-1');
         expect(class1.title).toBe('Yoga Morning');
         expect(class1.bookingsCount).toBe(2); // 2 réservations confirmées
@@ -602,8 +602,8 @@ describe('Class Routes - Tests d\'Intégration', () => {
 
         // Act
         const response = await app.handleRequest(
-          'POST', 
-          '/api/classes', 
+          'POST',
+          '/api/classes',
           newClassData,
           { authorization: 'Bearer admin-1' }
         );
@@ -938,7 +938,7 @@ describe('Class Routes - Tests d\'Intégration', () => {
 
       test('should reject coach update that creates conflict', async () => {
         // Arrange - Mettre le même coach que class-2 à la même heure
-        const updateData = { 
+        const updateData = {
           coach: 'Emma Thompson', // Coach de class-2
           datetime: timeUtils.futureDate(2) // Même heure que class-2
         };

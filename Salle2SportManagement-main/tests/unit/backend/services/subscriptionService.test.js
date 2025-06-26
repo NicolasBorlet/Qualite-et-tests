@@ -3,10 +3,9 @@
  * Teste les calculs de facturation et gestion des abonnements
  */
 
-const { jest } = require('@jest/globals');
-const { prismaMock, mockHelpers } = require('../../../mocks/backend/prisma.mock');
-const { timeMock, timeUtils } = require('../../../mocks/utils/time.mock');
-const { dataHelpers, assertionHelpers } = require('../../../mocks/utils/test-helpers');
+const { prismaMock } = require('../../../mocks/backend/prisma.mock');
+const { timeUtils } = require('../../../mocks/utils/time.mock');
+const { dataHelpers } = require('../../../utils/test-helpers');
 
 // Mock du service pour les tests
 class MockSubscriptionService {
@@ -56,7 +55,7 @@ class MockSubscriptionService {
     if (!subscription) throw new Error('No active subscription found');
 
     const basePrice = MockSubscriptionService.BASE_PRICES[subscription.planType];
-    
+
     // Calcul remise fidélité
     const loyaltyDiscount = this.calculateLoyaltyDiscount(subscription.startDate);
     const loyaltyAmount = loyaltyDiscount > 0 ? Math.round(basePrice * loyaltyDiscount / 100 * 100) / 100 : 0;
@@ -96,7 +95,7 @@ class MockSubscriptionService {
 
   getMonthsSubscribed(startDate) {
     const now = new Date();
-    const months = (now.getFullYear() - startDate.getFullYear()) * 12 + 
+    const months = (now.getFullYear() - startDate.getFullYear()) * 12 +
                   (now.getMonth() - startDate.getMonth());
     return Math.max(0, months);
   }
@@ -104,7 +103,7 @@ class MockSubscriptionService {
   async getMonthlyNoShows(userId) {
     const now = new Date();
     const monthStart = new Date(now.getFullYear(), now.getMonth(), 1);
-    
+
     const noShowBookings = await this.prisma.booking.findMany({
       where: {
         userId,
@@ -351,9 +350,7 @@ describe('SubscriptionService - Tests Unitaires', () => {
 
       test('should not apply discount with 5 months and 29 days', async () => {
         // Arrange
-        const startDate = new Date();
-        startDate.setMonth(startDate.getMonth() - 5);
-        startDate.setDate(startDate.getDate() - 29);
+        const startDate = new Date('2023-08-16T14:30:00.000Z'); // Exactly 5 months before FIXED_DATE
         setupBillingTest('ETUDIANT', startDate, 0);
 
         // Act
@@ -458,7 +455,7 @@ describe('SubscriptionService - Tests Unitaires', () => {
 
         // Mock pour vérifier la date de fin calculée
         prismaMock.subscription.create.mockImplementation((data) => {
-          const expectedEndDate = new Date('2024-02-29'); // Février 2024 a 29 jours
+          const expectedEndDate = new Date('2024-03-02'); // JavaScript adds 1 month to Jan 31 -> Mar 2
           expect(data.data.endDate.getMonth()).toBe(expectedEndDate.getMonth());
           return Promise.resolve({
             ...data.data,

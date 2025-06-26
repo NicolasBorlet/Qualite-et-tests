@@ -3,7 +3,7 @@
  * Simule le comportement du store auth avec localStorage
  */
 
-import { ref, computed } from 'vue';
+import { ref, computed, readonly } from 'vue';
 
 // Données de test pour les utilisateurs disponibles
 const MOCK_AVAILABLE_USERS = [
@@ -105,7 +105,7 @@ export function createAuthStoreMock() {
   };
 
   return {
-    currentUser: readonly(currentUser),
+    currentUser,
     isAuthenticated,
     isAdmin,
     login,

@@ -165,6 +165,42 @@ const timeUtils = {
    * @returns {number} Millisecondes équivalentes
    */
   daysToMs: (days) => days * 24 * 60 * 60 * 1000,
+
+  /**
+   * Début du jour courant
+   * @returns {Date} Début de la journée
+   */
+  startOfDay: () => {
+    const now = MockDate.getCurrentTime();
+    return new RealDate(now.getFullYear(), now.getMonth(), now.getDate(), 0, 0, 0, 0);
+  },
+
+  /**
+   * Fin du jour courant
+   * @returns {Date} Fin de la journée
+   */
+  endOfDay: () => {
+    const now = MockDate.getCurrentTime();
+    return new RealDate(now.getFullYear(), now.getMonth(), now.getDate(), 23, 59, 59, 999);
+  },
+
+  /**
+   * Début de l'année courante
+   * @returns {Date} Premier jour de l'année
+   */
+  startOfYear: () => {
+    const now = MockDate.getCurrentTime();
+    return new RealDate(now.getFullYear(), 0, 1, 0, 0, 0, 0);
+  },
+
+  /**
+   * Fin de l'année courante
+   * @returns {Date} Dernier jour de l'année
+   */
+  endOfYear: () => {
+    const now = MockDate.getCurrentTime();
+    return new RealDate(now.getFullYear(), 11, 31, 23, 59, 59, 999);
+  },
 };
 
 /**

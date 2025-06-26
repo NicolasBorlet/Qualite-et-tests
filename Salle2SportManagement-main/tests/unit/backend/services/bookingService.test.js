@@ -3,10 +3,9 @@
  * Teste les fonctionnalités critiques de réservation
  */
 
-const { jest } = require('@jest/globals');
-const { prismaMock, mockHelpers } = require('../../../mocks/backend/prisma.mock');
-const { timeMock, timeUtils, timeScenarios } = require('../../../mocks/utils/time.mock');
-const { dataHelpers, assertionHelpers } = require('../../../mocks/utils/test-helpers');
+const { prismaMock } = require('../../../mocks/backend/prisma.mock');
+const { timeMock, timeUtils } = require('../../../mocks/utils/time.mock');
+const { dataHelpers } = require('../../../utils/test-helpers');
 
 // Import du service à tester (sera adapté selon la structure réelle)
 // const BookingService = require('../../../../backend/src/services/bookingService');
@@ -22,7 +21,7 @@ class MockBookingService {
     const user = await this.prisma.user.findUnique({ where: { id: userId } });
     if (!user) throw new Error('User not found');
 
-    const classItem = await this.prisma.class.findUnique({ 
+    const classItem = await this.prisma.class.findUnique({
       where: { id: classId },
       include: { bookings: true }
     });
@@ -104,8 +103,8 @@ class MockBookingService {
       confirmedBookings: bookings.filter(b => b.status === 'CONFIRMED').length,
       cancelledBookings: bookings.filter(b => b.status === 'CANCELLED').length,
       noShows: bookings.filter(b => b.status === 'NO_SHOW').length,
-      monthlyNoShows: bookings.filter(b => 
-        b.status === 'NO_SHOW' && 
+      monthlyNoShows: bookings.filter(b =>
+        b.status === 'NO_SHOW' &&
         new Date(b.class.datetime) >= monthStart
       ).length
     };
@@ -115,7 +114,7 @@ class MockBookingService {
 
   async markNoShows() {
     const now = new Date();
-    
+
     const overdueBookings = await this.prisma.booking.findMany({
       where: {
         status: 'CONFIRMED',
@@ -128,7 +127,7 @@ class MockBookingService {
     if (overdueBookings.length === 0) return 0;
 
     const bookingIds = overdueBookings.map(b => b.id);
-    
+
     const result = await this.prisma.booking.updateMany({
       where: { id: { in: bookingIds } },
       data: { status: 'NO_SHOW' }
@@ -158,7 +157,7 @@ describe('BookingService - Tests Unitaires', () => {
     const setupCancellationTest = (hoursUntilClass) => {
       const now = timeMock.getCurrentTime();
       const classTime = new Date(now.getTime() + hoursUntilClass * 60 * 60 * 1000);
-      
+
       const booking = {
         id: 'booking-1',
         userId: 'user-1',
@@ -263,7 +262,7 @@ describe('BookingService - Tests Unitaires', () => {
       });
       prismaMock.booking.findUnique.mockResolvedValue(existingBooking);
       prismaMock.booking.findMany.mockResolvedValue([]);
-      
+
       if (!existingBooking) {
         prismaMock.booking.create.mockResolvedValue({
           id: 'new-booking-1',
@@ -469,12 +468,14 @@ describe('BookingService - Tests Unitaires', () => {
         // Arrange
         const currentDate = timeMock.getCurrentTime();
         const monthStart = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1);
+
+        const lastMonth = new Date(currentDate.getFullYear(), currentDate.getMonth() - 1, 15);
         
         const bookings = [
           { status: 'CONFIRMED', class: { datetime: timeUtils.futureDate(1) } },
           { status: 'CONFIRMED', class: { datetime: timeUtils.futureDate(2) } },
           { status: 'CANCELLED', class: { datetime: timeUtils.pastDate(1) } },
-          { status: 'NO_SHOW', class: { datetime: timeUtils.pastDate(2) } },
+          { status: 'NO_SHOW', class: { datetime: lastMonth } }, // Previous month
           { status: 'NO_SHOW', class: { datetime: new Date(monthStart.getTime() + 86400000) } } // This month
         ];
         setupStatsTest(bookings);
@@ -534,8 +535,8 @@ describe('BookingService - Tests Unitaires', () => {
   describe('⏰ Marquage Automatique des No-Shows', () => {
     const setupNoShowTest = (confirmedBookings) => {
       prismaMock.booking.findMany.mockResolvedValue(confirmedBookings);
-      prismaMock.booking.updateMany.mockResolvedValue({ 
-        count: confirmedBookings.length 
+      prismaMock.booking.updateMany.mockResolvedValue({
+        count: confirmedBookings.length
       });
     };
 
@@ -582,7 +583,7 @@ describe('BookingService - Tests Unitaires', () => {
           { id: 'booking-1', status: 'CONFIRMED', class: { datetime: new Date(now.getTime() - 1000) } }, // 1 second ago
           { id: 'booking-2', status: 'CONFIRMED', class: { datetime: new Date(now.getTime() + 1000) } }  // 1 second future
         ];
-        
+
         // Only past booking should be found
         prismaMock.booking.findMany.mockResolvedValue([borderlineBookings[0]]);
         prismaMock.booking.updateMany.mockResolvedValue({ count: 1 });

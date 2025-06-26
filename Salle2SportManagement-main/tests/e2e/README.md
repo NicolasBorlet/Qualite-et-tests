@@ -142,7 +142,7 @@ tests/e2e/
     "role": "USER"
   },
   "adminUser": {
-    "id": "e2e-admin-1", 
+    "id": "e2e-admin-1",
     "email": "admin.e2e@gym.com",
     "firstname": "Admin",
     "lastname": "Test",
@@ -171,7 +171,7 @@ tests/e2e/
   "fullClass": {
     "id": "e2e-class-full",
     "title": "E2E Full Class",
-    "coach": "Emma E2E", 
+    "coach": "Emma E2E",
     "capacity": 1,
     "datetime": "2024-02-15T14:00:00Z"
   },
@@ -208,7 +208,7 @@ npm run test:e2e:report
 ### Variables d'environnement
 ```bash
 # URL de l'application de test
-E2E_BASE_URL=http://localhost:3000
+E2E_BASE_URL=http://localhost:8080
 
 # Configuration de la base de données de test
 E2E_DB_URL=postgresql://test:test@localhost:5432/gym_test

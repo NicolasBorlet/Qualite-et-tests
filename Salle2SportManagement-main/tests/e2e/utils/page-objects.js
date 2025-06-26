@@ -6,14 +6,14 @@
 export class LoginPage {
   constructor(page) {
     this.page = page;
-    
+
     // Sélecteurs
     this.userSelect = '[data-testid="user-select"]';
     this.loginButton = '[data-testid="login-button"]';
     this.errorMessage = '[data-testid="error-message"]';
     this.loadingIndicator = '[data-testid="loading"]';
-    this.pageTitle = 'h1:has-text("Connexion")';
-    
+    this.pageTitle = 'h2:has-text("Connexion")';
+
     // Sélecteurs avancés
     this.userOption = (email) => `option[value="${email}"]`;
     this.loginForm = '.login-form';
@@ -35,7 +35,7 @@ export class LoginPage {
   async login(email) {
     await this.selectUser(email);
     await this.clickLogin();
-    
+
     // Attendre soit la redirection, soit l'erreur
     await Promise.race([
       this.page.waitForURL('/dashboard'),
@@ -60,7 +60,7 @@ export class LoginPage {
 export class DashboardPage {
   constructor(page) {
     this.page = page;
-    
+
     // Sélecteurs principaux
     this.pageTitle = '[data-testid="page-title"]';
     this.userInfo = '[data-testid="user-info"]';
@@ -72,18 +72,18 @@ export class DashboardPage {
     this.refreshButton = '[data-testid="refresh-button"]';
     this.errorMessage = '[data-testid="error-message"]';
     this.loadingIndicator = '[data-testid="loading"]';
-    
+
     // Sélecteurs de statistiques
     this.totalBookings = '[data-testid="total-bookings"]';
     this.confirmedBookings = '[data-testid="confirmed-bookings"]';
     this.noShowRate = '[data-testid="noshow-rate"]';
-    
+
     // Sélecteurs d'abonnement
     this.planType = '[data-testid="plan-type"]';
     this.subscriptionStatus = '[data-testid="subscription-status"]';
     this.noSubscription = '[data-testid="no-subscription"]';
     this.subscribeButton = '[data-testid="subscribe-button"]';
-    
+
     // Sélecteurs de cours et réservations
     this.noClasses = '[data-testid="no-classes"]';
     this.noBookings = '[data-testid="no-bookings"]';
@@ -118,7 +118,7 @@ export class DashboardPage {
 
   async getSubscriptionInfo() {
     const hasSubscription = await this.page.locator(this.planType).isVisible();
-    
+
     if (hasSubscription) {
       return {
         planType: await this.page.locator(this.planType).textContent(),
@@ -136,13 +136,13 @@ export class DashboardPage {
   async getAvailableClasses() {
     const classElements = await this.page.locator('[data-testid^="class-"]').all();
     const classes = [];
-    
+
     for (const classElement of classElements) {
       const classId = await classElement.getAttribute('data-testid');
       const title = await classElement.locator('h3').textContent();
       const coach = await classElement.locator('.coach').textContent();
       const capacity = await classElement.locator('.capacity').textContent();
-      
+
       classes.push({
         id: classId.replace('class-', ''),
         title,
@@ -150,14 +150,14 @@ export class DashboardPage {
         capacity
       });
     }
-    
+
     return classes;
   }
 
   async bookClass(classId) {
     const bookButton = `[data-testid="book-${classId}"]`;
     await this.page.click(bookButton);
-    
+
     // Attendre la mise à jour (nouvelle requête)
     await this.page.waitForTimeout(1000);
   }
@@ -165,15 +165,15 @@ export class DashboardPage {
   async getUserBookings() {
     const bookingElements = await this.page.locator('[data-testid^="booking-"]').all();
     const bookings = [];
-    
+
     for (const bookingElement of bookingElements) {
       const bookingId = await bookingElement.getAttribute('data-testid');
       const title = await bookingElement.locator('h4').textContent();
       const status = await bookingElement.locator('.status').textContent();
-      
+
       const cancelButton = bookingElement.locator(`[data-testid^="cancel-"]`);
       const canCancel = await cancelButton.isVisible();
-      
+
       bookings.push({
         id: bookingId.replace('booking-', ''),
         title,
@@ -181,14 +181,14 @@ export class DashboardPage {
         canCancel
       });
     }
-    
+
     return bookings;
   }
 
   async cancelBooking(bookingId) {
     const cancelButton = `[data-testid="cancel-${bookingId}"]`;
     await this.page.click(cancelButton);
-    
+
     // Attendre la mise à jour
     await this.page.waitForTimeout(1000);
   }
@@ -220,13 +220,13 @@ export class DashboardPage {
 export class AdminPage {
   constructor(page) {
     this.page = page;
-    
+
     // Sélecteurs de navigation admin
     this.adminMenu = '[data-testid="admin-menu"]';
     this.classManagementLink = '[data-testid="class-management-link"]';
     this.userManagementLink = '[data-testid="user-management-link"]';
     this.dashboardLink = '[data-testid="dashboard-link"]';
-    
+
     // Sélecteurs de gestion des cours
     this.createClassButton = '[data-testid="create-class-button"]';
     this.classForm = '[data-testid="class-form"]';
@@ -238,18 +238,18 @@ export class AdminPage {
     this.classDescription = '[data-testid="class-description-input"]';
     this.saveClassButton = '[data-testid="save-class-button"]';
     this.cancelClassFormButton = '[data-testid="cancel-class-form-button"]';
-    
+
     // Sélecteurs de liste des cours
     this.classesTable = '[data-testid="classes-table"]';
     this.editClassButton = (classId) => `[data-testid="edit-class-${classId}"]`;
     this.deleteClassButton = (classId) => `[data-testid="delete-class-${classId}"]`;
     this.cancelClassButton = (classId) => `[data-testid="cancel-class-${classId}"]`;
-    
+
     // Sélecteurs de confirmation
     this.confirmDialog = '[data-testid="confirm-dialog"]';
     this.confirmButton = '[data-testid="confirm-button"]';
     this.cancelButton = '[data-testid="cancel-button"]';
-    
+
     // Messages et notifications
     this.successMessage = '[data-testid="success-message"]';
     this.errorMessage = '[data-testid="error-message"]';
@@ -275,13 +275,13 @@ export class AdminPage {
     await this.page.fill(this.classTitle, classData.title);
     await this.page.fill(this.classCoach, classData.coach);
     await this.page.fill(this.classDatetime, classData.datetime);
-    
+
     if (classData.duration) {
       await this.page.fill(this.classDuration, classData.duration.toString());
     }
-    
+
     await this.page.fill(this.classCapacity, classData.capacity.toString());
-    
+
     if (classData.description) {
       await this.page.fill(this.classDescription, classData.description);
     }
@@ -289,7 +289,7 @@ export class AdminPage {
 
   async saveClass() {
     await this.page.click(this.saveClassButton);
-    
+
     // Attendre soit le succès, soit l'erreur
     await Promise.race([
       this.page.waitForSelector(this.successMessage),
@@ -306,7 +306,7 @@ export class AdminPage {
   async editClass(classId, updateData) {
     await this.page.click(this.editClassButton(classId));
     await this.page.waitForSelector(this.classForm);
-    
+
     // Remplir seulement les champs à modifier
     for (const [field, value] of Object.entries(updateData)) {
       const selector = this[`class${field.charAt(0).toUpperCase() + field.slice(1)}`];
@@ -314,7 +314,7 @@ export class AdminPage {
         await this.page.fill(selector, value.toString());
       }
     }
-    
+
     await this.saveClass();
   }
 
@@ -322,7 +322,7 @@ export class AdminPage {
     await this.page.click(this.deleteClassButton(classId));
     await this.page.waitForSelector(this.confirmDialog);
     await this.page.click(this.confirmButton);
-    
+
     await Promise.race([
       this.page.waitForSelector(this.successMessage),
       this.page.waitForSelector(this.errorMessage)
@@ -333,7 +333,7 @@ export class AdminPage {
     await this.page.click(this.cancelClassButton(classId));
     await this.page.waitForSelector(this.confirmDialog);
     await this.page.click(this.confirmButton);
-    
+
     await Promise.race([
       this.page.waitForSelector(this.successMessage),
       this.page.waitForSelector(this.errorMessage)
@@ -343,7 +343,7 @@ export class AdminPage {
   async getClasses() {
     const classRows = await this.page.locator(`${this.classesTable} tbody tr`).all();
     const classes = [];
-    
+
     for (const row of classRows) {
       const cells = await row.locator('td').all();
       if (cells.length >= 5) {
@@ -356,7 +356,7 @@ export class AdminPage {
         });
       }
     }
-    
+
     return classes;
   }
 
@@ -387,7 +387,7 @@ export class AdminPage {
 export class SubscriptionPage {
   constructor(page) {
     this.page = page;
-    
+
     // Sélecteurs de la page d'abonnement
     this.pageTitle = '[data-testid="subscription-page-title"]';
     this.currentPlan = '[data-testid="current-plan"]';
@@ -396,19 +396,19 @@ export class SubscriptionPage {
     this.renewalInfo = '[data-testid="renewal-info"]';
     this.changePlanButton = '[data-testid="change-plan-button"]';
     this.cancelSubscriptionButton = '[data-testid="cancel-subscription-button"]';
-    
+
     // Sélecteurs de facturation
     this.currentBill = '[data-testid="current-bill"]';
     this.basePrice = '[data-testid="base-price"]';
     this.loyaltyDiscount = '[data-testid="loyalty-discount"]';
     this.noShowPenalty = '[data-testid="noshow-penalty"]';
     this.finalAmount = '[data-testid="final-amount"]';
-    
+
     // Sélecteurs de changement de plan
     this.planSelector = '[data-testid="plan-selector"]';
     this.planOption = (planType) => `[data-testid="plan-option-${planType}"]`;
     this.confirmPlanChangeButton = '[data-testid="confirm-plan-change"]';
-    
+
     // Messages
     this.noSubscriptionMessage = '[data-testid="no-subscription-message"]';
     this.subscribeNowButton = '[data-testid="subscribe-now-button"]';
@@ -430,7 +430,7 @@ export class SubscriptionPage {
 
   async getBillingInfo() {
     await this.page.waitForSelector(this.currentBill);
-    
+
     return {
       basePrice: await this.page.locator(this.basePrice).textContent(),
       loyaltyDiscount: await this.page.locator(this.loyaltyDiscount).textContent(),
@@ -458,10 +458,10 @@ export class SubscriptionPage {
   async changePlan(newPlanType) {
     await this.page.click(this.changePlanButton);
     await this.page.waitForSelector(this.planSelector);
-    
+
     await this.page.click(this.planOption(newPlanType));
     await this.page.click(this.confirmPlanChangeButton);
-    
+
     // Attendre la confirmation
     await this.page.waitForTimeout(2000);
   }
@@ -474,7 +474,7 @@ export class SubscriptionPage {
   async getBillingHistory() {
     const historyRows = await this.page.locator(`${this.billingHistory} tbody tr`).all();
     const history = [];
-    
+
     for (const row of historyRows) {
       const cells = await row.locator('td').all();
       if (cells.length >= 4) {
@@ -486,7 +486,7 @@ export class SubscriptionPage {
         });
       }
     }
-    
+
     return history;
   }
 }
@@ -502,9 +502,9 @@ export class CommonActions {
   }
 
   async takeScreenshot(name) {
-    await this.page.screenshot({ 
+    await this.page.screenshot({
       path: `tests/e2e/reports/screenshots/${name}.png`,
-      fullPage: true 
+      fullPage: true
     });
   }
 
@@ -540,7 +540,7 @@ export class CommonActions {
   }
 
   async waitForApiResponse(urlPattern, method = 'GET') {
-    return await this.page.waitForResponse(response => 
+    return await this.page.waitForResponse(response =>
       response.url().includes(urlPattern) && response.request().method() === method
     );
   }
