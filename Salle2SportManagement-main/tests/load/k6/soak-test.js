@@ -5,10 +5,10 @@ import userCreationScenario from './scenarios/user-creation-loop.js';
 
 export let options = {
   scenarios: {
-    booking: { executor: 'constant-vus', exec: 'booking', vus: 10, duration: '12m' },
-    planning: { executor: 'constant-vus', exec: 'planning', vus: 10, duration: '12m' },
-    userCreation: { executor: 'constant-vus', exec: 'userCreation', vus: 5, duration: '12m' },
-    cancellation: { executor: 'constant-vus', exec: 'cancellation', vus: 5, duration: '12m' },
+    booking: { executor: 'constant-vus', exec: 'booking', vus: 10, duration: '15s' },
+    planning: { executor: 'constant-vus', exec: 'planning', vus: 10, duration: '15s' },
+    userCreation: { executor: 'constant-vus', exec: 'userCreation', vus: 5, duration: '15s' },
+    cancellation: { executor: 'constant-vus', exec: 'cancellation', vus: 5, duration: '15s' },
   },
 };
 
