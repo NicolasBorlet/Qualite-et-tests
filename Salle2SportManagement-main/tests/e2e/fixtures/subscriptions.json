@@ -1,0 +1,322 @@
+{
+  "standardSubscription": {
+    "id": "e2e-sub-standard",
+    "userId": "e2e-user-1",
+    "planType": "STANDARD",
+    "startDate": "2024-01-01T00:00:00.000Z",
+    "endDate": "2024-02-01T00:00:00.000Z",
+    "active": true,
+    "basePrice": 39.99,
+    "finalPrice": 39.99,
+    "loyaltyDiscount": 0,
+    "noShowPenalty": 0,
+    "createdAt": "2023-12-31T00:00:00.000Z",
+    "description": "Abonnement standard actif pour utilisateur de base"
+  },
+
+  "premiumSubscription": {
+    "id": "e2e-sub-premium",
+    "userId": "e2e-user-premium", 
+    "planType": "PREMIUM",
+    "startDate": "2023-06-01T00:00:00.000Z",
+    "endDate": "2024-06-01T00:00:00.000Z",
+    "active": true,
+    "basePrice": 59.99,
+    "finalPrice": 53.99,
+    "loyaltyDiscount": 6.00,
+    "noShowPenalty": 0,
+    "createdAt": "2023-05-31T00:00:00.000Z",
+    "description": "Abonnement premium avec remise fidélité (8+ mois)"
+  },
+
+  "studentSubscription": {
+    "id": "e2e-sub-student",
+    "userId": "e2e-user-new",
+    "planType": "ETUDIANT",
+    "startDate": "2024-01-15T00:00:00.000Z",
+    "endDate": "2024-02-15T00:00:00.000Z",
+    "active": true,
+    "basePrice": 29.99,
+    "finalPrice": 29.99,
+    "loyaltyDiscount": 0,
+    "noShowPenalty": 0,
+    "createdAt": "2024-01-14T00:00:00.000Z",
+    "description": "Abonnement étudiant pour nouveau membre"
+  },
+
+  "problematicSubscription": {
+    "id": "e2e-sub-problem",
+    "userId": "e2e-user-problem",
+    "planType": "STANDARD",
+    "startDate": "2024-01-01T00:00:00.000Z",
+    "endDate": "2024-02-01T00:00:00.000Z",
+    "active": true,
+    "basePrice": 39.99,
+    "finalPrice": 45.99,
+    "loyaltyDiscount": 0,
+    "noShowPenalty": 6.00,
+    "noShowCount": 7,
+    "createdAt": "2023-12-31T00:00:00.000Z",
+    "description": "Abonnement avec pénalités no-show (7 absences > 5)"
+  },
+
+  "expiredSubscription": {
+    "id": "e2e-sub-expired",
+    "userId": "e2e-user-expired",
+    "planType": "PREMIUM",
+    "startDate": "2023-01-01T00:00:00.000Z",
+    "endDate": "2024-01-01T00:00:00.000Z",
+    "active": false,
+    "basePrice": 59.99,
+    "finalPrice": 59.99,
+    "loyaltyDiscount": 0,
+    "noShowPenalty": 0,
+    "expiredAt": "2024-01-01T00:00:00.000Z",
+    "createdAt": "2022-12-31T00:00:00.000Z",
+    "description": "Abonnement expiré pour tests de renouvellement"
+  },
+
+  "suspendedSubscription": {
+    "id": "e2e-sub-suspended",
+    "userId": "e2e-user-suspended",
+    "planType": "STANDARD",
+    "startDate": "2023-12-01T00:00:00.000Z",
+    "endDate": "2024-12-01T00:00:00.000Z",
+    "active": false,
+    "basePrice": 39.99,
+    "finalPrice": 39.99,
+    "loyaltyDiscount": 0,
+    "noShowPenalty": 0,
+    "suspendedAt": "2024-01-10T00:00:00.000Z",
+    "suspendedReason": "Violation des règles de la salle",
+    "createdAt": "2023-11-30T00:00:00.000Z",
+    "description": "Abonnement suspendu pour tests de gestion"
+  },
+
+  "concurrentSubscriptions": [
+    {
+      "id": "e2e-sub-concurrent-1",
+      "userId": "e2e-concurrent-1",
+      "planType": "STANDARD",
+      "startDate": "2024-01-01T00:00:00.000Z",
+      "endDate": "2024-02-01T00:00:00.000Z",
+      "active": true,
+      "basePrice": 39.99,
+      "finalPrice": 39.99,
+      "loyaltyDiscount": 0,
+      "noShowPenalty": 0,
+      "createdAt": "2023-12-31T00:00:00.000Z",
+      "description": "Abonnement pour tests de concurrence 1"
+    },
+    {
+      "id": "e2e-sub-concurrent-2",
+      "userId": "e2e-concurrent-2",
+      "planType": "PREMIUM",
+      "startDate": "2024-01-01T00:00:00.000Z",
+      "endDate": "2024-02-01T00:00:00.000Z",
+      "active": true,
+      "basePrice": 59.99,
+      "finalPrice": 59.99,
+      "loyaltyDiscount": 0,
+      "noShowPenalty": 0,
+      "createdAt": "2023-12-31T00:00:00.000Z",
+      "description": "Abonnement pour tests de concurrence 2"
+    },
+    {
+      "id": "e2e-sub-concurrent-3",
+      "userId": "e2e-concurrent-3",
+      "planType": "ETUDIANT",
+      "startDate": "2024-01-01T00:00:00.000Z",
+      "endDate": "2024-02-01T00:00:00.000Z",
+      "active": true,
+      "basePrice": 29.99,
+      "finalPrice": 29.99,
+      "loyaltyDiscount": 0,
+      "noShowPenalty": 0,
+      "createdAt": "2023-12-31T00:00:00.000Z",
+      "description": "Abonnement pour tests de concurrence 3"
+    }
+  ],
+
+  "billingHistory": {
+    "e2e-user-premium": [
+      {
+        "id": "e2e-bill-premium-1",
+        "subscriptionId": "e2e-sub-premium",
+        "period": "2023-06",
+        "baseAmount": 59.99,
+        "loyaltyDiscount": 0,
+        "noShowPenalty": 0,
+        "finalAmount": 59.99,
+        "paidAt": "2023-06-01T00:00:00.000Z",
+        "status": "PAID"
+      },
+      {
+        "id": "e2e-bill-premium-2",
+        "subscriptionId": "e2e-sub-premium",
+        "period": "2023-07",
+        "baseAmount": 59.99,
+        "loyaltyDiscount": 0,
+        "noShowPenalty": 0,
+        "finalAmount": 59.99,
+        "paidAt": "2023-07-01T00:00:00.000Z",
+        "status": "PAID"
+      },
+      {
+        "id": "e2e-bill-premium-current",
+        "subscriptionId": "e2e-sub-premium",
+        "period": "2024-01",
+        "baseAmount": 59.99,
+        "loyaltyDiscount": 6.00,
+        "noShowPenalty": 0,
+        "finalAmount": 53.99,
+        "paidAt": "2024-01-01T00:00:00.000Z",
+        "status": "PAID"
+      }
+    ],
+    "e2e-user-problem": [
+      {
+        "id": "e2e-bill-problem-current",
+        "subscriptionId": "e2e-sub-problem",
+        "period": "2024-01",
+        "baseAmount": 39.99,
+        "loyaltyDiscount": 0,
+        "noShowPenalty": 6.00,
+        "finalAmount": 45.99,
+        "paidAt": "2024-01-01T00:00:00.000Z",
+        "status": "PAID"
+      }
+    ]
+  },
+
+  "planTypes": {
+    "STANDARD": {
+      "name": "Standard",
+      "description": "Accès aux cours collectifs et équipements de base",
+      "basePrice": 39.99,
+      "features": [
+        "Accès illimité aux cours collectifs",
+        "Utilisation des équipements de base",
+        "Vestiaires et douches",
+        "Application mobile"
+      ],
+      "restrictions": [
+        "Pas d'accès aux cours premium",
+        "Pas de coaching personnalisé"
+      ]
+    },
+    "PREMIUM": {
+      "name": "Premium",
+      "description": "Accès complet + cours premium et services personnalisés",
+      "basePrice": 59.99,
+      "features": [
+        "Tous les avantages Standard",
+        "Accès aux cours premium",
+        "1 séance de coaching personnalisé/mois",
+        "Accès prioritaire aux réservations",
+        "Espace détente et sauna",
+        "Analyse nutritionnelle"
+      ],
+      "restrictions": []
+    },
+    "ETUDIANT": {
+      "name": "Étudiant",
+      "description": "Tarif réduit pour étudiants avec justificatif",
+      "basePrice": 29.99,
+      "features": [
+        "Accès aux cours collectifs (hors premium)",
+        "Utilisation des équipements de base",
+        "Vestiaires et douches",
+        "Application mobile"
+      ],
+      "restrictions": [
+        "Justificatif étudiant requis",
+        "Pas d'accès aux cours premium",
+        "Horaires restreints (hors heures de pointe)"
+      ]
+    }
+  },
+
+  "loyaltyRules": {
+    "discountEligibilityMonths": 6,
+    "discountPercentage": 10,
+    "description": "10% de remise après 6 mois d'abonnement continu"
+  },
+
+  "noShowPenalties": {
+    "penaltyThreshold": 5,
+    "penaltyPercentage": 15,
+    "description": "15% de pénalité après 5 no-shows dans le mois"
+  },
+
+  "subscriptionLimits": {
+    "maxActiveSubscriptions": 1,
+    "gracePeriodDays": 7,
+    "renewalReminderDays": 14,
+    "description": "Un seul abonnement actif par utilisateur, période de grâce de 7 jours"
+  },
+
+  "paymentMethods": [
+    {
+      "id": "e2e-payment-card",
+      "type": "CARD",
+      "last4": "1234",
+      "brand": "VISA",
+      "expiryMonth": 12,
+      "expiryYear": 2025,
+      "isDefault": true,
+      "userId": "e2e-user-1"
+    },
+    {
+      "id": "e2e-payment-sepa",
+      "type": "SEPA",
+      "iban": "FR76****1234",
+      "bankName": "Banque Test",
+      "isDefault": false,
+      "userId": "e2e-user-premium"
+    }
+  ],
+
+  "specialOffers": [
+    {
+      "id": "e2e-offer-student",
+      "code": "STUDENT2024",
+      "type": "PERCENTAGE",
+      "value": 20,
+      "validUntil": "2024-12-31T23:59:59.000Z",
+      "applicablePlans": ["STANDARD", "PREMIUM"],
+      "description": "20% de réduction pour les nouveaux étudiants"
+    },
+    {
+      "id": "e2e-offer-loyalty",
+      "code": "LOYAL50",
+      "type": "FIXED",
+      "value": 50,
+      "validUntil": "2024-06-30T23:59:59.000Z",
+      "applicablePlans": ["PREMIUM"],
+      "description": "50€ de remise pour les membres fidèles"
+    }
+  ],
+
+  "renewalNotifications": [
+    {
+      "id": "e2e-notif-renewal-1",
+      "userId": "e2e-user-1",
+      "subscriptionId": "e2e-sub-standard",
+      "type": "RENEWAL_REMINDER",
+      "scheduledDate": "2024-01-18T00:00:00.000Z",
+      "sent": false,
+      "content": "Votre abonnement expire bientôt. Renouvelez dès maintenant !"
+    },
+    {
+      "id": "e2e-notif-expired-1",
+      "userId": "e2e-user-expired",
+      "subscriptionId": "e2e-sub-expired",
+      "type": "SUBSCRIPTION_EXPIRED",
+      "scheduledDate": "2024-01-01T00:00:00.000Z",
+      "sent": true,
+      "sentAt": "2024-01-01T00:00:00.000Z",
+      "content": "Votre abonnement a expiré. Renouvelez pour continuer à profiter de nos services."
+    }
+  ]
+}

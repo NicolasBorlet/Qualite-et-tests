@@ -1,0 +1,180 @@
+{
+  "standardUser": {
+    "id": "e2e-user-1",
+    "firstname": "John",
+    "lastname": "Doe",
+    "email": "john.doe.e2e@example.com",
+    "role": "USER",
+    "dateJoined": "2024-01-01T00:00:00.000Z",
+    "active": true,
+    "description": "Utilisateur standard pour tests E2E - parcours basiques"
+  },
+  
+  "premiumUser": {
+    "id": "e2e-user-premium",
+    "firstname": "Premium",
+    "lastname": "User",
+    "email": "premium.e2e@example.com",
+    "role": "USER",
+    "dateJoined": "2023-06-01T00:00:00.000Z",
+    "active": true,
+    "description": "Utilisateur premium avec historique - tests de fidélité et remises"
+  },
+  
+  "adminUser": {
+    "id": "e2e-admin-1",
+    "firstname": "Admin",
+    "lastname": "Test",
+    "email": "admin.e2e@gym.com",
+    "role": "ADMIN",
+    "dateJoined": "2023-01-01T00:00:00.000Z",
+    "active": true,
+    "description": "Administrateur pour tests de gestion - création/modification de cours"
+  },
+  
+  "newUser": {
+    "id": "e2e-user-new",
+    "firstname": "New",
+    "lastname": "Member",
+    "email": "new.member.e2e@example.com",
+    "role": "USER",
+    "dateJoined": "2024-01-15T00:00:00.000Z",
+    "active": true,
+    "description": "Nouvel utilisateur sans historique - tests de première utilisation"
+  },
+  
+  "problematicUser": {
+    "id": "e2e-user-problem",
+    "firstname": "Problem",
+    "lastname": "User",
+    "email": "problem.e2e@example.com",
+    "role": "USER",
+    "dateJoined": "2024-01-01T00:00:00.000Z",
+    "active": true,
+    "description": "Utilisateur avec historique de no-shows - tests de pénalités"
+  },
+  
+  "suspendedUser": {
+    "id": "e2e-user-suspended",
+    "firstname": "Suspended",
+    "lastname": "User", 
+    "email": "suspended.e2e@example.com",
+    "role": "USER",
+    "dateJoined": "2023-12-01T00:00:00.000Z",
+    "active": false,
+    "description": "Utilisateur suspendu - tests de gestion des accès"
+  },
+  
+  "expiredUser": {
+    "id": "e2e-user-expired",
+    "firstname": "Expired",
+    "lastname": "Subscription",
+    "email": "expired.e2e@example.com",
+    "role": "USER",
+    "dateJoined": "2023-01-01T00:00:00.000Z",
+    "active": true,
+    "description": "Utilisateur avec abonnement expiré - tests de renouvellement"
+  },
+
+  "invalidUser": {
+    "id": "e2e-user-invalid",
+    "firstname": "Invalid",
+    "lastname": "User",
+    "email": "invalid.e2e@example.com",
+    "role": "USER",
+    "dateJoined": "2024-01-01T00:00:00.000Z",
+    "active": true,
+    "description": "Utilisateur pour tests négatifs - données invalides"
+  },
+
+  "concurrentUsers": [
+    {
+      "id": "e2e-concurrent-1",
+      "firstname": "Concurrent",
+      "lastname": "One",
+      "email": "concurrent1.e2e@example.com",
+      "role": "USER",
+      "dateJoined": "2024-01-01T00:00:00.000Z",
+      "active": true,
+      "description": "Premier utilisateur pour tests de concurrence"
+    },
+    {
+      "id": "e2e-concurrent-2", 
+      "firstname": "Concurrent",
+      "lastname": "Two",
+      "email": "concurrent2.e2e@example.com",
+      "role": "USER",
+      "dateJoined": "2024-01-01T00:00:00.000Z",
+      "active": true,
+      "description": "Deuxième utilisateur pour tests de concurrence"
+    },
+    {
+      "id": "e2e-concurrent-3",
+      "firstname": "Concurrent", 
+      "lastname": "Three",
+      "email": "concurrent3.e2e@example.com",
+      "role": "USER",
+      "dateJoined": "2024-01-01T00:00:00.000Z",
+      "active": true,
+      "description": "Troisième utilisateur pour tests de concurrence"
+    }
+  ],
+
+  "credentials": {
+    "standardUser": {
+      "email": "john.doe.e2e@example.com",
+      "password": "E2ETestPassword123!"
+    },
+    "premiumUser": {
+      "email": "premium.e2e@example.com", 
+      "password": "E2ETestPassword123!"
+    },
+    "adminUser": {
+      "email": "admin.e2e@gym.com",
+      "password": "E2EAdminPassword123!"
+    },
+    "newUser": {
+      "email": "new.member.e2e@example.com",
+      "password": "E2ETestPassword123!"
+    },
+    "problematicUser": {
+      "email": "problem.e2e@example.com",
+      "password": "E2ETestPassword123!"
+    },
+    "suspendedUser": {
+      "email": "suspended.e2e@example.com",
+      "password": "E2ETestPassword123!"
+    },
+    "expiredUser": {
+      "email": "expired.e2e@example.com",
+      "password": "E2ETestPassword123!"
+    },
+    "invalidCredentials": {
+      "email": "nonexistent@example.com",
+      "password": "WrongPassword123!"
+    },
+    "concurrent": [
+      {
+        "email": "concurrent1.e2e@example.com",
+        "password": "E2ETestPassword123!"
+      },
+      {
+        "email": "concurrent2.e2e@example.com", 
+        "password": "E2ETestPassword123!"
+      },
+      {
+        "email": "concurrent3.e2e@example.com",
+        "password": "E2ETestPassword123!"
+      }
+    ]
+  },
+
+  "sessionTokens": {
+    "standardUser": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e2e-user-1.test",
+    "premiumUser": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e2e-user-premium.test", 
+    "adminUser": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e2e-admin-1.test",
+    "newUser": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e2e-user-new.test",
+    "problematicUser": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e2e-user-problem.test",
+    "expiredUser": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e2e-user-expired.test"
+  }
+}
