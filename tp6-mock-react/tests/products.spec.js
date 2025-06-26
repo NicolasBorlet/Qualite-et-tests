@@ -65,13 +65,13 @@ describe('App', () => {
     await waitFor(() => expect(screen.getByText(/aucun produit/i)).toBeInTheDocument());
   });
 
-  it('affiche un message d\'erreur en cas d\'erreur serveur', async () => {
+  it('affiche un message d erreur en cas d erreur serveur', async () => {
     render(<App />);
     fireEvent.click(screen.getByText(/test erreur 500/i));
     await waitFor(() => expect(screen.getByText(/erreur.*500/i)).toBeInTheDocument());
   });
 
-  it('affiche un message d\'erreur en cas d\'erreur réseau', async () => {
+  it('affiche un message d erreur en cas d erreur réseau', async () => {
     render(<App />);
     fireEvent.click(screen.getByText(/test erreur réseau/i));
     await waitFor(() => expect(screen.getByText(/erreur.*network/i)).toBeInTheDocument());
@@ -88,11 +88,9 @@ describe('App', () => {
   it('efface les erreurs précédentes lors d\'une nouvelle requête', async () => {
     render(<App />);
     
-    // Déclenche une erreur
     fireEvent.click(screen.getByText(/test erreur 500/i));
     await waitFor(() => expect(screen.getByText(/erreur/i)).toBeInTheDocument());
     
-    // Recharge normalement
     fireEvent.click(screen.getByText(/recharger/i));
     await waitFor(() => expect(screen.queryByText(/erreur/i)).not.toBeInTheDocument());
     expect(screen.getByText(/Produit 1/)).toBeInTheDocument();

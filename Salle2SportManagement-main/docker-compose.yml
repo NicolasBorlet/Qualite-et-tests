@@ -1,0 +1,70 @@
+﻿services:
+  # PostgreSQL Database
+  db:
+    image: postgres:15-alpine
+    container_name: gym_db
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-gym_management}
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-password}
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - gym_network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-postgres}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Backend API
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: gym_backend
+    ports:
+      - "3000:3000"
+    environment:
+      NODE_ENV: production
+      PORT: 3000
+      DATABASE_URL: postgresql://${POSTGRES_USER:-postgres}:${POSTGRES_PASSWORD:-password}@db:5432/${POSTGRES_DB:-gym_management}
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - gym_network
+    volumes:
+      - ./backend:/app
+      - /app/node_modules
+    command: >
+      sh -c "
+        echo 'Waiting for database...' &&
+        npm run prisma:migrate &&
+        npm run seed &&
+        npm start
+      "
+
+  # Frontend Web App
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: gym_frontend
+    ports:
+      - "8080:80"
+    environment:
+      VITE_API_BASE_URL: http://localhost:3000/api
+    depends_on:
+      - backend
+    networks:
+      - gym_network
+
+volumes:
+  postgres_data:
+
+networks:
+  gym_network:
+    driver: bridge
